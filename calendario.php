@@ -1,3 +1,6 @@
+<? 
+include('conexion.php'); 
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -65,7 +68,7 @@
                     $("#ModalEventos").modal();        // Muestra el modal de eventos
                 },
                 // URL para obtener eventos del servidor
-                events:'http://localhost/CalendarioWeb/eventos.php',
+                events:'http://localhost/proyecto_gym/conexion.php',
                 // Función para manejar el clic en un evento del calendario
                 eventClick:function(calEvent, jsEvent, view){
                     $('#tituloEvento').html(calEvent.title);       // Muestra el título del evento en el modal
@@ -135,14 +138,6 @@
 
     <script>
         $('#boton_agregar').click(function(){
-            
-             //Esto lo que hace es que cuando el usuario toca el boton (click)
-             //recolecta la informacion del titulo, la fecha, la hora, el color que el usuario seleccionó
-            //y recolecta la descripcion que el usuario escribió.
-    
-            //texColor: "#FFFFFF" cuando lo dejamos así es porqué no quisimos solicitarlo al usuario
-            //lo dejamos, nosotros, por default con el color: #FFFFFF
-
             var NuevoEvento= {
               title:$('#txtTitulo').val(),
               start:$('#txtFecha').val()+" "+$('#txtHora').val(),
@@ -152,7 +147,9 @@
 
             };
             // Agrega el evento al calendario
-            $('#CalendarioWeb').fullCalendar('renderEvent',NuevoEvento );
+            //$('#CalendarioWeb').fullCalendar('renderEvent',NuevoEvento );
+            var mje = "<?php echo updateMensaje(); ?>";
+            alert(mje);
             // Cierra el modal de eventos
             $("#ModalEventos").modal('toggle');
         });
