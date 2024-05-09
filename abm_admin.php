@@ -38,12 +38,21 @@
         <br><label><strong>Eliminar un cliente. </strong></label><BR>
         <input type="text" name="txt_eliminar_cliente_nombre" placeholder="ingrese ID">
         <input type="submit" name="btn_eliminar_apellido_cliente"value="DELETE">
+        <br><label><strong>CREAR un cliente. </strong></label><BR>
+        <input type="text" name="txt_crear_cliente_apellido" placeholder="ingrese APELLIDO">
+        <input type="text" name="txt_crear_cliente_nombre" placeholder="ingrese NOMBRE">
+        <input type="text" name="txt_crear_cliente_dni" placeholder="ingrese DNI"><br>
+        <input type="text" name="txt_crear_cliente_telefono" placeholder="ingrese TELEFONO">
+        <input type="text" name="txt_crear_cliente_mail" placeholder="ingrese MAIL">
+        <input type="text" name="txt_crear_cliente_sexo" placeholder="ingrese SEXO"><br>
+        <input type="password" name="txt_crear_cliente_pass" placeholder="ingrese PASSWORD">
+        <input type="submit" name="btn_crear_cliente"value="Alta Cliente">
     </form><!--------------------------- form --------------------------------------------------->
 </body>
 </html>
 <!-------------------------- P  H   P  --------------------------------------------->
 <!-------------------------- BOTON MOSTRAR DATOS CLIENTE--------------------------------------------->
-<?php//------------------------------------------------------------------------------------------------------<?php
+<?php
     if(isset($_POST['boton_datos_clientes'])){
         $id_clientes= $_POST['select_clientes'];  
 
@@ -99,6 +108,27 @@
             echo"ERROR DELETE CLIENTE";
             exit;
         }
+    }
+//-------------------------- BOTON CREATE DATOS CLIENTE---------------------------------------------
+    if(isset($_POST['btn_crear_cliente'])){
+        $apellido=$_POST['txt_crear_cliente_apellido'];
+        $nombre=$_POST['txt_crear_cliente_nombre'];
+        $dni=$_POST['txt_crear_cliente_dni'];
+        $mail=$_POST['txt_crear_cliente_mail'];
+        $telefono=$_POST['txt_crear_cliente_telefono'];
+        $sexo=$_POST['txt_crear_cliente_sexo'];
+        $pass=$_POST['txt_crear_cliente_pass'];
+
+        $query="INSERT INTO clientes(  apellido , nombre , dni , telefono , mail , sexo , pass) VALUES 
+        ('$apellido','$nombre','$dni','$telefono','$mail','$sexo', '$pass');";
+
+        $rtdo= mysqli_query($conexion, $query);
+        var_dump($query);
+        var_dump($rtdo);
+        if(! $rtdo){
+            echo"FALSE CREATE"; exit;
+        }
+
     }
 ?><!-----------------------------------------------------------------------------------------------------------------php?--->
 <!-------------------------- CIERRE CONEXION --------------------------------------------->
