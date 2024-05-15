@@ -120,7 +120,7 @@
         $pass=$_POST['txt_crear_cliente_pass'];
 
         $query="INSERT INTO clientes(  apellido , nombre , dni , telefono , mail , sexo , pass) VALUES 
-        ('$apellido','$nombre','$dni','$telefono','$mail','$sexo', '$pass');";
+        ('$apellido','$nombre','$dni','$telefono','$mail','$sexo', md5('$pass') );";//----MD5 encript
 
         $rtdo= mysqli_query($conexion, $query);
         var_dump($query);
