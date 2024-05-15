@@ -1,5 +1,11 @@
 <?php
  include('conexion.php');
+//--------PERMISO DE SESIÓN-----administrador------------------
+     session_start();    
+     if (!$_SESSION['ingreso']){
+         header( 'Location:login_admin.php');
+         exit();
+     }
 ?>
 
 <!DOCTYPE html>
