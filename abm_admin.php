@@ -33,17 +33,25 @@
             </option>
             <?php } ?>
         </select>
+        <!--- VER DATOS--->
         <input type="submit" name="boton_datos_clientes" value="VER"><br>
+        <!--- BUSCAR CLIENTE APELLIDO --->
         <label><strong>Buscar por apellido</strong></label>
         <input type="text" name="txt_buscar_cliente_nombre" placeholder="ingrese apellido">
         <input type="submit" name="btn_buscar_apellido_cliente"value="BUSCAR">
+        <!--- UPDATE MAIL --->
         <br><label><strong> Modificar correo del cliente seleccionado.</strong></label><BR>
-        <label>Ingrese nuevo mail</label>
-        <input type="text" name="cliente_nuevo_mail"><br>
-        <input type="submit" name="boton_modificar_mail_cliente" value="MODIFICAR">
+        <input type="text" name="cliente_nuevo_mail" placeholder="miCorreo@mail.com">
+        <input type="submit" name="boton_modificar_mail_cliente" value="MODIFICAR MAIL"><br>
+        <!--- UPDATE TELÉFONO --->
+        <br><label><strong> Modificar teléfono del cliente seleccionado.</strong></label><BR>
+        <input type="text" name="cliente_nuevo_telefono" placeholder="nuevo Teléfono">
+        <input type="submit" name="boton_modificar_telefono_cliente" value="MODIFICAR TELÉFONO"><br>
+        <!--- DELETE CLIENTE --->
         <br><label><strong>Eliminar un cliente. </strong></label><BR>
         <input type="text" name="txt_eliminar_cliente_nombre" placeholder="ingrese ID">
         <input type="submit" name="btn_eliminar_apellido_cliente"value="DELETE">
+        <!--- CREATE CLIENTE --->
         <br><label><strong>CREAR un cliente. </strong></label><BR>
         <input type="text" name="txt_crear_cliente_apellido" placeholder="ingrese APELLIDO">
         <input type="text" name="txt_crear_cliente_nombre" placeholder="ingrese NOMBRE">
@@ -51,7 +59,25 @@
         <input type="text" name="txt_crear_cliente_telefono" placeholder="ingrese TELEFONO">
         <input type="text" name="txt_crear_cliente_mail" placeholder="ingrese MAIL">
         <input type="text" name="txt_crear_cliente_sexo" placeholder="ingrese SEXO"><br>
-        <input type="password" name="txt_crear_cliente_pass" placeholder="ingrese PASSWORD">
+        <label><strong>Seleccione actividad (1, 2, PASE LIBRE)</strong></label>
+        <!---poder elegir 2 actvs pero si selecc pase libre que se bloqueen las otras--->
+        <select name="select_clientes_actividades">
+            <?php
+                $query = "SELECT * FROM actividades WHERE 1 ;" ;
+                $resultado = mysqli_query ($conexion , $query);
+                if (! $resultado){
+                    echo "ERROR CONSULTA select actividades";
+                    exit;
+                }
+            ?>
+            <?php while ($fila_actividades = mysqli_fetch_assoc($resultado) ){?> 
+            <option name="option_actividades_1" method="post"    value="<?= $fila_actividades['id'] ?>">
+                <?= ucfirst($fila_actividades['nombre']) ?>   
+            </option>
+            <?php } ?>
+        </select>
+
+        <br><input type="password" name="txt_crear_cliente_pass" placeholder="ingrese PASSWORD">
         <input type="submit" name="btn_crear_cliente"value="Alta Cliente">
     </form><!--------------------------- form --------------------------------------------------->
 </body>
@@ -72,9 +98,14 @@
         echo"<br> Mail :\t".strtoupper($dato_select_clientes['mail']);
         echo"<br> Teléfono :\t".strtoupper($dato_select_clientes['telefono']);
         echo"<br> Sexo :\t".strtoupper($dato_select_clientes['sexo']);
+        // ----  BUSCAR NOMBRE DE LA ACTIVIDAD ---//
+        $id_actv_1= $dato_select_clientes['fk_actv_1'];
+        $query_actv_1 = "SELECT * FROM actividades WHERE id = '$id_actv_1'; ";
+        $rtdo_actv_1 = mysqli_query($conexion , $query_actv_1) ;
+        $dato_actv_1 = mysqli_fetch_assoc($rtdo_actv_1);
+        echo"<br> Actividad 1 :\t".strtoupper( $dato_actv_1['nombre']);
     }        
-//-------------------------- BOTON MODIFICAR CLIENTE---------------------------------------------//
-
+//-------------------------- BOTON MODIFICAR MAIL CLIENTE---------------------------------------------//
     if(isset($_POST['boton_modificar_mail_cliente'])){
         $id_clientes= $_POST['select_clientes'];
         $nuevo_mail_cliente = $_POST['cliente_nuevo_mail'];
@@ -87,6 +118,19 @@
             exit;
             }
     }
+//-------------------------- BOTON MODIFICAR TELÉFONO CLIENTE---------------------------------------------//
+if(isset($_POST['boton_modificar_telefono_cliente'])){
+    $id_clientes= $_POST['select_clientes'];
+    $nuevo_telefono_cliente = $_POST['cliente_nuevo_telefono'];
+    $query_modificar_telefono_cliente = "UPDATE clientes SET telefono = '$nuevo_telefono_cliente' WHERE id = '$id_clientes';";
+    $resultado_modificar_telefono_cliente = mysqli_query($conexion, $query_modificar_telefono_cliente);
+    if($resultado_modificar_telefono_cliente){
+        echo"MODIFICA TELÉFONO OK!";
+    }else{
+        echo"ERROR MODIFICAR TELÉFONO CLIENTE";
+        exit;
+        }
+}
 //-------------------------- BOTON BUSCAR X APELLIDO CLIENTE---------------------------------------------//
     if(isset($_POST['btn_buscar_apellido_cliente'])){
         $apellido_cliente = $_POST['txt_buscar_cliente_nombre'];
@@ -123,10 +167,12 @@
         $mail=$_POST['txt_crear_cliente_mail'];
         $telefono=$_POST['txt_crear_cliente_telefono'];
         $sexo=$_POST['txt_crear_cliente_sexo'];
+        $actv1=$_POST['select_clientes_actividades'];
         $pass=$_POST['txt_crear_cliente_pass'];
 
-        $query="INSERT INTO clientes(  apellido , nombre , dni , telefono , mail , sexo , pass) VALUES 
-        ('$apellido','$nombre','$dni','$telefono','$mail','$sexo', md5('$pass') );";//----MD5 encript
+        $query="INSERT INTO clientes(  apellido , nombre , dni , telefono , mail , sexo , pass, fk_actv_1 , fk_actv_2) 
+        VALUES 
+        ('$apellido','$nombre','$dni','$telefono','$mail','$sexo', md5('$pass') , '$actv1' , NULL );";//----MD5 encript
 
         $rtdo= mysqli_query($conexion, $query);
         var_dump($query);
