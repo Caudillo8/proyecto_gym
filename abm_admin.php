@@ -7,7 +7,7 @@
          exit();
      }
 ?>
-
+<!---------H  T  M  L  ***********************************************************---------->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +16,7 @@
     <title>abm admin</title>
 </head>
 <body>
-    <label><strong>LISTADO CLIENTES</strong></label>
+    <h2>CLIENTES</h2>
     <form method="post" action="">
         <select name="select_clientes">
             <?php
@@ -80,7 +80,11 @@
         <br><input type="password" name="txt_crear_cliente_pass" placeholder="ingrese PASSWORD">
         <input type="submit" name="btn_crear_cliente"value="Alta Cliente">
     </form><!--------------------------- form --------------------------------------------------->
+    <!---******************************* PROFESORES -------------------->
+    <hr>
+    <h2>PROFESORES.</h2>
     <form method="post" action="">
+        <!-----------------VER DATOS PROFESOR --------------------------------->
         <label><strong>Listado de profesores:</strong></label>
         <select name="select_profesores">
             <?php
@@ -96,11 +100,115 @@
             </option>
             <?php } ?> <!--- {}  cierre ---> 
         </select>
-        <input type="submit" value="VER DATOS PROFESOR" name="btn_ver_profesor">
+        <input type="submit" value="SELECCIONAR PROFESOR" name="btn_ver_profesor"><!--btn ver datos-->
+        <!--- ELIMINAR UN PROFESOR  ------------------------------------------------------->
+        <br><label><strong>Eliminar un profesor:</strong></label>
+        <input type="text" name="id_profesor_eliminar" placeholder="ID PROFESOR ELIMINAR">
+        <input type="submit" name="btn_profesor_eliminar" value="DELETE PROFESOR">
+        <!---PROFESOR UPDATE TELEFONO ---------------------------------------->
+        <br><label><strong>Actualizar teléfono:</strong></label>
+        <input type="text" name="txt_profesor_nuevo_telefono" placeholder="ingresa nuevo teléfono">
+        <input type="submit" name="btn_profesor_update_telefono" value="UPDATE TELEFONO">
+        <!---PROFESOR UPDATE CORREO ---------------------------------------->
+        <br><label><strong>Actualizar correo electrónico:</strong></label>
+        <input type="text" name="txt_profesor_nuevo_mail" placeholder="ingresa nuevo correo">
+        <input type="submit" name="btn_profesor_update_mail" value="UPDATE MAIL">
+        <!--- CREATE PROFESOR -------------->
+        <br><BR><label><strong><U>INGRESAR NUEVO PROFESOR.</U></strong></label>
+        <br><label><strong>INGRESAR APELLIDO.</strong></label>
+        <input type="text" name="txt_nuevo_apellido" placeholder="apellido">
+        <br><label><strong>INGRESAR NOMBRE.</strong></label>
+        <input type="text" name="txt_nuevo_nombre" placeholder="nombre">
+        <br><label><strong>INGRESAR DNI.</strong></label>
+        <input type="text" name="txt_nuevo_dni" placeholder="dni">
+        <br><label><strong>INGRESAR SEXO.</strong></label>
+        <input type="text" name="txt_nuevo_sexo" placeholder="sexo">
+        <br><label><strong>INGRESAR TELÉFONO.</strong></label>
+        <input type="text" name="txt_nuevo_telefono" placeholder="teléfono">
+        <br><label><strong>INGRESAR MAIL.</strong></label>
+        <input type="text" name="txt_nuevo_mail" placeholder="correo">
+        <br><label><strong>Seleccione ACTIVIDAD/ES QUE DICTA.</strong></label>
+        <select  name="select_actv_profesor">
+            <?php
+            $query = "SELECT * FROM actividades WHERE 1;" ;
+            $rtdo = mysqli_query($conexion , $query);
+            ?>
+            <?php while ($fila = mysqli_fetch_assoc($rtdo) ){  ?>
+            <option method="post" action="" value="<?=$fila['id']?>">
+                <?= $fila['nombre']?>
+            </option>
+            <?php  }?>
+        </select>
+        <br><label><strong>INGRESAR CLAVE.</strong></label>
+        <input type="pass" name="txt_nuevo_pass" placeholder="contraseña">
+        <br><input type="submit" name="btn_create_profesor" value="CREATE PROFESOR"><!--BTN CREATE PROFESOR--->
+        
     </form><!---  form PROFESORES ----------------------------------------------------------------->
+    <HR><!---los echo de php salen acá abajo...--->
 </body>
-</html>
+</html><!------       HTML          -------->
 <!-------------------------- P  H   P  --------------------------------------------->
+<!-------------------------- BTN UPDATE PROFESOR MAIL --------------------------------------------->
+<?php
+    if(isset($_POST['btn_profesor_update_mail'])){
+        $id_selected = intval($_POST['select_profesores']);
+        $nuevo =$_POST['txt_profesor_nuevo_mail'];
+        $update =  "UPDATE profesores SET mail = '$nuevo' WHERE id = '$id_selected';";
+        $rtdo = mysqli_query($conexion , $update);
+        if(!$rtdo){
+            echo"ERROR UPDATE PROFE mail"; exit;
+        }      
+    }
+?>
+<!-------------------------- BTN UPDATE PROFESOR TELEFONO --------------------------------------------->
+<?php
+    if(isset($_POST['btn_profesor_update_telefono'])){
+        $id_selected = intval($_POST['select_profesores']) ;
+        $nuevo =$_POST['txt_profesor_nuevo_telefono'];
+        $update ="UPDATE profesores SET telefono = '$nuevo' WHERE id = '$id_selected';";
+        $rtdo =mysqli_query($conexion , $update);
+        if(!$rtdo){
+            echo"ERROR UPDATE PROFE tel"; exit;
+        }  
+    }
+?>
+<!-------------------------- BTN DELETE PROFESOR  --------------------------------------------->
+<?php
+    if(isset($_POST['btn_profesor_eliminar'])){
+        $id_selected = intval($_POST['id_profesor_eliminar']);
+
+        $delete = "DELETE FROM profesores WHERE id = '$id_selected'";
+        $rtdo = mysqli_query($conexion, $delete);
+        if(!$rtdo){
+            echo"ERROR DELETE PROFE"; exit;
+        }  
+    }
+?>
+<!-------------------------- BTN CREATE PROFESOR  --------------------------------------------->
+<?php
+    if (isset($_POST['btn_create_profesor']) ){
+        $apellido=$_POST['txt_nuevo_apellido'] ;
+        $nombre = $_POST['txt_nuevo_nombre'];
+        $sexo =$_POST['txt_nuevo_sexo'] ;
+        $dni =$_POST['txt_nuevo_dni'] ;
+        $mail = $_POST['txt_nuevo_mail'];
+        $telefono =$_POST['txt_nuevo_telefono'] ;
+        $actividad =$_POST['select_actv_profesor'] ;
+        $pass = $_POST['txt_nuevo_pass'];
+
+        $insert = "INSERT INTO profesores( apellido, nombre, dni, 
+        telefono, mail, sexo, fk_actividades, pass) 
+        VALUES ('$apellido' , '$nombre' , '$sexo' , '$dni' ,
+            '$mail' , '$telefono' , '$actividad', md5('$pass')
+        );";
+        //var_dump($insert);
+        $rtdo = mysqli_query($conexion , $insert);
+        if(! $rtdo){
+            echo"FALSE CREATE profesor"; exit;
+        }
+
+     }
+?>
 <!-------------------------- BTN VER DATOS PROFESOR  --------------------------------------------->
 <?PHP
     if(isset($_POST['btn_ver_profesor'])){
@@ -119,7 +227,7 @@
         echo"<br>DNI :\t".strtoupper($fila['dni']);
         echo"<br>TELÉFONO :\t".strtoupper($fila['telefono']);
         echo"<br>MAIL :\t".strtoupper($fila['mail']);
-        echo"<br>SEXO\ :\t".strtoupper($fila['sexo']);
+        echo"<br>SEXO :\t".strtoupper($fila['sexo']);
         echo"<br>ACTIVIDAD/ES QUE DICTA :\t".strtoupper($nombre_actv['nombre']);
     }
 ?>
@@ -215,8 +323,6 @@ if(isset($_POST['boton_modificar_telefono_cliente'])){
         ('$apellido','$nombre','$dni','$telefono','$mail','$sexo', md5('$pass') , '$actv1' , NULL );";//----MD5 encript
 
         $rtdo= mysqli_query($conexion, $query);
-        var_dump($query);
-        var_dump($rtdo);
         if(! $rtdo){
             echo"FALSE CREATE"; exit;
         }
