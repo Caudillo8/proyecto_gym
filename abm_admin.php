@@ -63,7 +63,7 @@
         <!---poder elegir 2 actvs pero si selecc pase libre que se bloqueen las otras--->
         <select name="select_clientes_actividades">
             <?php
-                $query = "SELECT * FROM actividades WHERE 1 ;" ;
+                $query = "SELECT * FROM actividades WHERE 1 ;" ;//traigo todas las actividades
                 $resultado = mysqli_query ($conexion , $query);
                 if (! $resultado){
                     echo "ERROR CONSULTA select actividades";
@@ -80,9 +80,49 @@
         <br><input type="password" name="txt_crear_cliente_pass" placeholder="ingrese PASSWORD">
         <input type="submit" name="btn_crear_cliente"value="Alta Cliente">
     </form><!--------------------------- form --------------------------------------------------->
+    <form method="post" action="">
+        <label><strong>Listado de profesores:</strong></label>
+        <select name="select_profesores">
+            <?php
+                $query = "SELECT * FROM profesores WHERE 1;" ;// me traigo los profesores
+                $rtdo = mysqli_query($conexion , $query) ;
+                if (!$rtdo){
+                    echo "ERROR LÍNEA 90"; exit;
+                } 
+            ?>    
+            <?php while ( $dato_profesor = mysqli_fetch_assoc($rtdo)  ){ ?> <!-- { --->
+            <option name="option_profesor" method = "post " value=" <?= $dato_profesor['id'] ?> ">
+              <?= ucfirst($dato_profesor['apellido']) ?> <?= ucfirst($dato_profesor['nombre']) ?>
+            </option>
+            <?php } ?> <!--- {}  cierre ---> 
+        </select>
+        <input type="submit" value="VER DATOS PROFESOR" name="btn_ver_profesor">
+    </form><!---  form PROFESORES ----------------------------------------------------------------->
 </body>
 </html>
 <!-------------------------- P  H   P  --------------------------------------------->
+<!-------------------------- BTN VER DATOS PROFESOR  --------------------------------------------->
+<?PHP
+    if(isset($_POST['btn_ver_profesor'])){
+        $id_selected = $_POST['select_profesores'];
+        $query = "SELECT * FROM profesores WHERE id = '$id_selected';" ;
+        $rtdo = mysqli_query($conexion , $query);
+        $fila = mysqli_fetch_assoc($rtdo);       
+        //---------- voy a tabla actividades ---------------
+        $query_actv = "SELECT nombre FROM actividades WHERE id = '$fila[fk_actividades]';" ;
+        $rtdo_actv = mysqli_query($conexion , $query_actv);
+        $nombre_actv = mysqli_fetch_assoc($rtdo_actv);
+        //------------  impresión en pantalla -----------------
+        echo"<br>ID : \t".$fila['id'];
+        echo"<br>APELLIDO :\t".strtoupper($fila['apellido']);
+        echo"<br>NOMBRE :\t".strtoupper($fila['nombre']);
+        echo"<br>DNI :\t".strtoupper($fila['dni']);
+        echo"<br>TELÉFONO :\t".strtoupper($fila['telefono']);
+        echo"<br>MAIL :\t".strtoupper($fila['mail']);
+        echo"<br>SEXO\ :\t".strtoupper($fila['sexo']);
+        echo"<br>ACTIVIDAD/ES QUE DICTA :\t".strtoupper($nombre_actv['nombre']);
+    }
+?>
 <!-------------------------- BOTON MOSTRAR DATOS CLIENTE--------------------------------------------->
 <?php
     if(isset($_POST['boton_datos_clientes'])){
@@ -98,7 +138,7 @@
         echo"<br> Mail :\t".strtoupper($dato_select_clientes['mail']);
         echo"<br> Teléfono :\t".strtoupper($dato_select_clientes['telefono']);
         echo"<br> Sexo :\t".strtoupper($dato_select_clientes['sexo']);
-        // ----  BUSCAR NOMBRE DE LA ACTIVIDAD ---//
+        // ----  BUSCAR NOMBRE DE LA ACTIVIDAD EN LA TABLA ACTIVIDAD---//
         $id_actv_1= $dato_select_clientes['fk_actv_1'];
         $query_actv_1 = "SELECT * FROM actividades WHERE id = '$id_actv_1'; ";
         $rtdo_actv_1 = mysqli_query($conexion , $query_actv_1) ;
