@@ -144,11 +144,86 @@
         <br><input type="submit" name="btn_create_profesor" value="CREATE PROFESOR"><!--BTN CREATE PROFESOR--->
         
     </form><!---  form PROFESORES ----------------------------------------------------------------->
+    <hr>
+    <h2><U>ACTIVIDADES/DISCIPLINAS.</U></h2><!--------------------ACTIVIDADES **************************-->
+    <form method="post" action="" >
+        <input type="submit" value="MOSTRAR ACTIVIDADES" name="btn_mostrar_actividades">
+        <h3>Editar/Eliminar una actividad.</h3>
+        <label><strong>Seleccione actividad.</strong></label>
+        <select name="select_actividades">
+            <?php
+                $query= "SELECT * FROM actividades WHERE 1;";
+                $rtdo = mysqli_query($conexion, $query);
+            ?>
+            <?php while ($fila = mysqli_fetch_assoc($rtdo)){?>
+            <option name="optn_actv" method="post" value="<?=$fila['id']?>">
+                <?= $fila['id']?> : <?= $fila['nombre']?>
+            </option>
+            <?php }?>
+        </select><br>
+        <input type="text" name="txt_update_actividad" placeholder="nuevo nombre">
+        <input type="submit" name="btn_update_actividad" value="EDITAR"><br>
+        <input type="submit" name="btn_delete_actividad" value="ELIMINAR"><br>
+        <h3>AGREGAR una actividad.</h3>
+        <input type="text" name="txt_create_actividad" placeholder="nombre NUEVA actividad">
+        <input type="submit" name="btn_create_actividad" value="AGREGAR"><br>
+    </form>
+
+
     <HR><!---los echo de php salen acá abajo...--->
+    <strong>OUTPUT</strong><br>
 </body>
 </html><!------       HTML          -------->
 <!-------------------------- P  H   P  --------------------------------------------->
-<!-------------------------- BTN UPDATE PROFESOR MAIL --------------------------------------------->
+<!---BTN MOSTRAR ACTIVIDADES--------------------------------------------------------- ACTIVIDADES ---------------->
+<?php
+    if(isset($_POST['btn_mostrar_actividades'])){
+        $id_selected = intval($_POST['select_actividades']);//REFERENCIA
+        $query ="SELECT * from actividades where 1;";
+        $rtdo = mysqli_query($conexion, $query);
+        while( $fila=mysqli_fetch_assoc($rtdo) ){
+            echo"<id>".$fila['id'];
+            echo" : ";
+            echo"<nombre>".$fila['nombre'];
+            echo"<br>";
+        }        
+    }
+?>
+<!-----------------------BTN DELETE ACTIVIDADES --------------------------------------->
+<?php
+    if(isset($_POST['btn_delete_actividad'])){
+        $id_selected = intval($_POST['select_actividades']);
+        $query = "DELETE FROM actividades WHERE id = '$id_selected';" ;
+        $rtdo = mysqli_query($conexion,$query);
+        if(!$rtdo){
+            echo"FALSE DELETE ACTIVIDADES";exit;
+        }
+    }
+?>
+<!-----------------------BTN ACTV CREATE --------------------------------------->
+<?php
+    if(isset($_POST['btn_create_actividad'])){
+        $nuevo = $_POST['txt_create_actividad'];
+        $query = "INSERT INTO actividades (nombre) VALUES ('$nuevo');" ;
+        $rtdo = mysqli_query($conexion, $query);
+        if(!$rtdo){
+            echo"FALSE CREATE ACTV."; EXIT;
+        }
+    }
+?>
+<!-----------------------BTN ACTV MODIFICAR NOMBRE --------------------------------------->
+<?php
+    if(isset($_POST['btn_update_actividad'])){
+        $id_selected = intval($_POST['select_actividades']);
+        $cambio = $_POST['txt_update_actividad'];
+        $query="UPDATE actividades SET nombre = '$cambio' WHERE id = '$id_selected';";
+        $rtdo = mysqli_query($conexion, $query);
+        if(! $rtdo){
+            echo"FALSE UPDATE ACTIVIDAD"; EXIT;
+        }
+    }
+?>
+<!------------------------- BTN UPDATE PROFESOR MAIL --------------------------------------------->
 <?php
     if(isset($_POST['btn_profesor_update_mail'])){
         $id_selected = intval($_POST['select_profesores']);
