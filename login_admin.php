@@ -1,14 +1,36 @@
 <?php
 include ('conexion.php');
+session_start();
+$_SESSION['ingreso'] = false;//que sea lo primero que se invoca!!!!!!!!!!!!!!
 ?>
+<?php
 
+if (isset($_POST['ingresar'])) {
+    $clave = md5($_POST['clave']);
+    $usuario = $_POST['usuario'];
+    //--------------ADMINISTRADORES---------------------------------
+    $query = "SELECT * FROM administradores
+                WHERE  usuario = '$usuario'
+                AND pass = '$clave';";
+    $resultado = mysqli_query($conexion, $query);
+    $fila = mysqli_fetch_assoc($resultado);
+
+    if ($fila) {
+        $_SESSION['ingreso'] = true;
+        header('Location:abm_admin.php');
+    } else {
+        header('Location:index.html');
+    }
+
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="estilos.css" type="text/css" rel="stylesheet" />
+    <link href="style.css" type="text/css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>ADMINISTRADOR</title>
@@ -147,28 +169,7 @@ include ('conexion.php');
 
 </html>
 
-<?php
-session_start();
-$_SESSION['ingreso'] = false;
-if (isset($_POST['ingresar'])) {
-    $clave = md5($_POST['clave']);
-    $usuario = $_POST['usuario'];
-    //--------------ADMINISTRADORES---------------------------------
-    $query = "SELECT * FROM administradores
-                WHERE  usuario = '$usuario'
-                AND pass = '$clave';";
-    $resultado = mysqli_query($conexion, $query);
-    $fila = mysqli_fetch_assoc($resultado);
 
-    if ($fila) {
-        $_SESSION['ingreso'] = true;
-        header('Location:abm_admin.php');
-    } else {
-        header('Location:index.html');
-    }
-
-}
-?>
 
 <?php
 mysqli_close($conexion);
