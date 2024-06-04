@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3307
--- Tiempo de generación: 29-04-2024 a las 21:54:38
+-- Tiempo de generación: 15-05-2024 a las 21:13:06
 -- Versión del servidor: 10.4.18-MariaDB
 -- Versión de PHP: 7.4.16
 
@@ -32,6 +32,20 @@ CREATE TABLE `actividades` (
   `nombre` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `actividades`
+--
+
+INSERT INTO `actividades` (`id`, `nombre`) VALUES
+(1, 'musculacion'),
+(2, 'kick-boxing'),
+(3, 'boxeo'),
+(4, 'pilates'),
+(5, 'natacion'),
+(6, 'yoga'),
+(7, 'spinning'),
+(8, 'salsa');
+
 -- --------------------------------------------------------
 
 --
@@ -43,6 +57,13 @@ CREATE TABLE `administradores` (
   `usuario` varchar(30) NOT NULL,
   `pass` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `administradores`
+--
+
+INSERT INTO `administradores` (`id`, `usuario`, `pass`) VALUES
+(2, 'admin', '202cb962ac59075b964b07152d234b70');
 
 -- --------------------------------------------------------
 
@@ -75,6 +96,24 @@ CREATE TABLE `clientes` (
   `pass` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id`, `apellido`, `nombre`, `dni`, `telefono`, `mail`, `sexo`, `pass`) VALUES
+(1, 'fernández', 'miguel', '13331455', '1144445555', 'mailModificado@mail.com', 'masculino', 'dc5c7986daef50c1e02ab09b442ee34f');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `mensajes`
+--
+
+CREATE TABLE `mensajes` (
+  `mensaje` varchar(50) DEFAULT NULL,
+  `fecha` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- --------------------------------------------------------
 
 --
@@ -99,12 +138,20 @@ CREATE TABLE `profesores` (
   `apellido` varchar(30) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `dni` varchar(8) NOT NULL,
-  `telefono` varchar(10) DEFAULT NULL,
+  `telefono` varchar(20) DEFAULT NULL,
   `mail` varchar(40) DEFAULT NULL,
   `sexo` varchar(20) NOT NULL,
   `fk_actividades` int(11) NOT NULL,
   `pass` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `profesores`
+--
+
+INSERT INTO `profesores` (`id`, `apellido`, `nombre`, `dni`, `telefono`, `mail`, `sexo`, `fk_actividades`, `pass`) VALUES
+(1, 'chavez', 'julio césar', '145287', '11-4151-5465', 'boxeoutn@gmail.com', 'masculino', 3, 'a5555c11ac8c9572d7ca28ba5eb241ed'),
+(2, 'peaty', 'adam', '29565112', '11-1212-2121', 'natacion_utn@gmail.com', 'masculino', 5, '951f991127a80861cc2e2c4dfcc171f5');
 
 --
 -- Índices para tablas volcadas
@@ -158,13 +205,13 @@ ALTER TABLE `profesores`
 -- AUTO_INCREMENT de la tabla `actividades`
 --
 ALTER TABLE `actividades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `administradores`
 --
 ALTER TABLE `administradores`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `clases`
@@ -176,7 +223,7 @@ ALTER TABLE `clases`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `pagos`
@@ -188,7 +235,7 @@ ALTER TABLE `pagos`
 -- AUTO_INCREMENT de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas
