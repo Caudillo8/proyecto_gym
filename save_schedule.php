@@ -15,7 +15,7 @@ if(empty($id)){
 }
 $save = $conexion->query($sql);
 if($save){
-    echo "<script> alert('Schedule Successfully Saved.'); location.replace('./') </script>";
+    echo "<script> alert('REGISTRO GUARDADO CON ÉXITO.'); location.replace('./') </script>";
 }else{
     echo "<pre>";
     echo "An Error occured.<br>";
