@@ -1,0 +1,4 @@
+Add Tabla Plan: refiere PASE LIBRE,1 ACTIVIDAD , SOLO MÁQUINAS.
+Funcionamiento=>Ver agenda: que perdure en bbdd. Posibilidad
+de darle un argumento array Cupo.
+Intentar ir completando resto de abms.

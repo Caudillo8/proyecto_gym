@@ -4,38 +4,36 @@ session_start();
 $_SESSION['ingreso'] = false;//que sea lo primero que se invoca!!!!!!!!!!!!!!
 ?>
 <?php
-
 if (isset($_POST['ingresar'])) {
     $clave = md5($_POST['clave']);
     $usuario = $_POST['usuario'];
     //--------------ADMINISTRADORES---------------------------------
-    $query = "SELECT * FROM administradores
-                WHERE  usuario = '$usuario'
+    $query = "SELECT * FROM profesores
+                WHERE  mail = '$usuario'
                 AND pass = '$clave';";
     $resultado = mysqli_query($conexion, $query);
     $fila = mysqli_fetch_assoc($resultado);
 
     if ($fila) {
         $_SESSION['ingreso'] = true;
-        header('Location:abm_admin.php');
+        header('Location:abm_profesor.php');
     } else {
-        header('Location:index.html');
+        header('Location:login_profesor.php');
     }
 
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/style.css" type="text/css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Login Admin</title>
+    <title>Login Profesor</title>
 </head>
+<body style="background-color: #000;">
 
-<body class="cuerpo_login_admin" style="background-color: #000;">
     <header>
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
@@ -119,13 +117,13 @@ if (isset($_POST['ingresar'])) {
                 <div class="col-lg-4 mx-auto">
                     <div class="card border-white" style="background-color: #000;">
                         <div class="card-header text-white text-center">
-                            Ingreso Admin
+                            Ingreso Profesor
                         </div>
                         <div class="card-body text-white" style="background-color: #000;">
-                            <form action="" method="post" class="login_admin">
+                            <form method="post" class="login_profesor">
                                 <div class="my-3">
-                                    <label class="form-label">Usuario:</label>
-                                    <input class="form-control" type="text" name="usuario">
+                                    <label class="form-label">Usuario (Mail):</label>
+                                    <input class="form-control" type="text" name="usuario"><!--- es el mail--->
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Contraseña:</label>
@@ -157,10 +155,9 @@ if (isset($_POST['ingresar'])) {
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
-
 </html>
-
 <?php
 mysqli_close($conexion);
 ?>

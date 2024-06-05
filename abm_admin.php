@@ -60,7 +60,7 @@
         <input type="text" name="txt_crear_cliente_telefono" placeholder="ingrese TELEFONO">
         <input type="text" name="txt_crear_cliente_mail" placeholder="ingrese MAIL">
         <input type="text" name="txt_crear_cliente_sexo" placeholder="ingrese SEXO"><br>
-        <label><strong>Seleccione actividad (1, 2, PASE LIBRE)</strong></label>
+        <label><strong>Seleccione actividad ( o PASE LIBRE)</strong></label>
         <!---poder elegir 2 actvs pero si selecc pase libre que se bloqueen las otras--->
         <select name="select_clientes_actividades">
             <?php
@@ -128,7 +128,7 @@
         <input type="text" name="txt_nuevo_telefono" placeholder="teléfono">
         <br><label><strong>INGRESAR MAIL.</strong></label>
         <input type="text" name="txt_nuevo_mail" placeholder="correo">
-        <br><label><strong>Seleccione ACTIVIDAD/ES QUE DICTA.</strong></label>
+        <br><label><strong>Seleccione ACTIVIDAD QUE DICTA.</strong></label>
         <select  name="select_actv_profesor">
             <?php
             $query = "SELECT * FROM actividades WHERE 1;" ;
