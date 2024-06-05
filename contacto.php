@@ -82,14 +82,16 @@
                     <div class="card-body">
                       <h1 class="card-title text-white">Contacto</h1>
                       <p class="card-text text-white">¿Tenés alguna pregunta? ¡Acá estamos para ayudarte! Completa el formulario a continuación y nos vamos a poner en contacto con vos en la brevedad.</p>
-                      <form>
+                      <form method="post">
                         <div class="mb-3">
                           <label for="name" class="form-label text-white">Nombre</label>
-                          <input type="text" class="form-control" id="name" placeholder="Tu nombre">
+                          <input type="text" class="form-control" id="name" placeholder="Tu nombre" required="">
+                          <!-- <input type="text" placeholder="name" name="name" required=""> Asi tiene otro estilo, pero es menos estético --> 
                         </div>
                         <div class="mb-3">
                           <label for="email" class="form-label text-white">Correo electrónico</label>
-                          <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com">
+                          <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com" required="">
+                          <!-- <input type="email" placeholder="email" name="email" required=""> Asi tiene otro estilo, pero es menos estético -->
                         </div>
                         <div class="mb-3">
                           <label for="message" class="form-label text-white">Mensaje</label>
@@ -97,6 +99,11 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                       </form>
+
+                      <?php  
+                      include("correo.php");
+                      ?>
+
                     </div>
                 </div>
                     <div class="col-lg-4 d-flex justify-content-center align-items-center">
