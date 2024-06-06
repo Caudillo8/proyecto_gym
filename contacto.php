@@ -2,10 +2,10 @@
 
 <?php
 
-        $servidor = "localhost";
+        $servidor = "localhost:3307";
         $usuario = "root";
         $clave = "";
-        $baseDeDatos = "probando";
+        $baseDeDatos = "gimnasio";
 
         $enlace = mysqli_connect ($servidor, $usuario, $clave, $baseDeDatos)
 
