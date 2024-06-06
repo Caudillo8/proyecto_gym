@@ -1,10 +1,23 @@
+<!-- conexión al Formulario -->
+
+<?php
+
+        $servidor = "localhost";
+        $usuario = "root";
+        $clave = "";
+        $baseDeDatos = "probando";
+
+        $enlace = mysqli_connect ($servidor, $usuario, $clave, $baseDeDatos)
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NombreSistema - Contacto</title>
-    <link rel="stylesheet" href="style.css" type="text">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   </head>
   <body>
@@ -42,7 +55,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link text-white" href="contacto.html">
+                    <a class="nav-link text-white" href="contacto.php">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
                         </svg>
@@ -75,6 +88,7 @@
             </div>
           </nav>
     </header>
+
     <div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 670px; background-color: #164773;">
         <div class="row align-items-center mx-auto">
             <div class="col-lg-6">
@@ -82,27 +96,26 @@
                     <div class="card-body">
                       <h1 class="card-title text-white">Contacto</h1>
                       <p class="card-text text-white">¿Tenés alguna pregunta? ¡Acá estamos para ayudarte! Completa el formulario a continuación y nos vamos a poner en contacto con vos en la brevedad.</p>
-                      <form method="post">
+                    
+                    <!-- Formulario -->
+                    <form action="#" name="probando" method="post">
                         <div class="mb-3">
-                          <label for="name" class="form-label text-white">Nombre</label>
-                          <input type="text" class="form-control" id="name" placeholder="Tu nombre" required="">
-                          <!-- <input type="text" placeholder="name" name="name" required=""> Asi tiene otro estilo, pero es menos estético --> 
+                            <label for="nombre" class="form-label" style="color: white;">Nombre</label>
+                            <input type="text" name="nombre" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                          <label for="email" class="form-label text-white">Correo electrónico</label>
-                          <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com" required="">
-                          <!-- <input type="email" placeholder="email" name="email" required=""> Asi tiene otro estilo, pero es menos estético -->
+                            <label for="correo" class="form-label" style="color: white;">Correo electrónico</label>
+                            <input type="email" name="correo" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                          <label for="message" class="form-label text-white">Mensaje</label>
-                          <textarea class="form-control" id="message" rows="3" placeholder="Tu mensaje"></textarea>
+                            <label for="telefono" class="form-label" style="color: white;">Teléfono</label>
+                            <input type="text" name="telefono" class="form-control" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                      </form>
-
-                      <?php  
-                      include("correo.php");
-                      ?>
+                        <div class="d-grid gap-2">
+                            <button type="submit" name="registro" class="btn btn-secondary">Enviar</button>
+                            <button type="reset" class="btn btn-secondary">Limpiar</button>
+                        </div>
+                    </form>
 
                     </div>
                 </div>
@@ -125,4 +138,27 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
+
+<!-- Funcion del Formulario -->
+
+<?php
+
+if(isset($_POST['registro'])){
+    $nombre= $_POST ['nombre'];
+    $correo= $_POST ['correo'];
+    $telefono= $_POST ['telefono'];
+
+    $insertarDatos = "INSERT INTO datos VALUES ('$nombre', '$correo', '$telefono', '')";
+    $ejecutarInsertar = mysqli_query ($enlace, $insertarDatos);
+
+    // Verificar si la consulta se ejecutó correctamente
+    if ($ejecutarInsertar) {
+        echo '<script>alert("Mail enviado correctamente");</script>';
+    } else {
+        echo '<script>alert("Error al enviar el correo");</script>';
+    }
+}
+
+?>
+
 </html>

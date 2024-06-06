@@ -5,3 +5,6 @@
 5) Inserté la imagen a la página creada previamente para que no esté solo el formulario en la página "Contacto".
 6) Convertí tanto index como contacto de HTML a PHP para posteriormente poder darle funcionalidad.
 7) Creé Correo.
+8) Finalmente eliminé Correo, no fué necesario para Contacto.
+9) Pude darle funcionalidad a Contacto. Una vez cargada la información, se envía correctamente.
+10) Actualmente, viendo como mejorar la estética de la página.
