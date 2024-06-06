@@ -120,7 +120,7 @@
                     </div>
                 </div>
                     <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                       <img src="images/imagen-boxeadora.jpg" alt="Imagen de contacto" class="img-fluid rounded float-end" style="max-width: 400px; margin-right: -1500px; margin-top: -600px; border: 2px solid black;">
+                       <img src="images/imagen-boxeadora.jpg" alt="Imagen de contacto" class="img-fluid rounded float-end" style="max-width: 600px; margin-right: -1500px; margin-top: -600px; border: 2px solid black;">
                     </div>
             </div>
         </div>
