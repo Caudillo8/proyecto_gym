@@ -119,14 +119,20 @@
                         <button type="button" class="btn btn-primary btn-sm rounded-0" id="edit" data-id="">Edit</button>
                         <button type="button" class="btn btn-danger btn-sm rounded-0" id="delete" data-id="">Delete</button>
                         <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
-    <!-------------------------------ACÁ PONER UN INPUT SUBMIT O BUTTON "QUIERO REGISTRAME----------------------------"--->
+                        <button type="submit" class="#" data-bs-dismiss="#" name="btn_anotarme" method="post">Quiero anotarme</button>
+                        <!---NO FUNCIONA CALENDARIO SI COLOCO PHP ACÁ ABAJO ---->
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Event Details Modal -->
-
+    <?php
+        if(isset($_POST['btn_anotarme'])){
+            echo"APRETÓ QUIERO ANOTARME";
+            echo"<script>alert('CLICK');</script>";
+            }
+    ?>
 <?php 
 $schedules = $conexion->query("SELECT * FROM `schedule_list`") ;
 $sched_res = [];
