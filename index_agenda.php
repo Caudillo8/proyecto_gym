@@ -119,6 +119,7 @@
                         <button type="button" class="btn btn-primary btn-sm rounded-0" id="edit" data-id="">Edit</button>
                         <button type="button" class="btn btn-danger btn-sm rounded-0" id="delete" data-id="">Delete</button>
                         <button type="button" class="btn btn-secondary btn-sm rounded-0" data-bs-dismiss="modal">Close</button>
+    <!-------------------------------ACÁ PONER UN INPUT SUBMIT O BUTTON "QUIERO REGISTRAME----------------------------"--->
                     </div>
                 </div>
             </div>
@@ -134,6 +135,7 @@ foreach($schedules->fetch_all(MYSQLI_ASSOC) as $row){
     $row['edate'] = date("F d, Y h:i A",strtotime($row['end_datetime']));
     $sched_res[$row['id']] = $row;
 }
+//DENTRO DEL PHP DE ABAJO UN EVENTO AL CLICK DE QUIERO REGISTRAME QUE HAGA UN INSERT EN LA TABLA CLASES
 ?>
 <?php 
 if(isset($conexion)) $conexion->close();
