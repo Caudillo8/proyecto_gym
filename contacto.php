@@ -1,14 +1,16 @@
 <!-- conexión al Formulario -->
 
 <?php
+    $servidor = "localhost";
+    $usuario = "root";
+    $clave = "";
+    $baseDeDatos = "probando";
 
-        $servidor = "localhost";
-        $usuario = "root";
-        $clave = "";
-        $baseDeDatos = "probando";
+    $enlace = mysqli_connect($servidor, $usuario, $clave, $baseDeDatos);
 
-        $enlace = mysqli_connect ($servidor, $usuario, $clave, $baseDeDatos)
-
+    if(!$enlace) {
+        die("Error en la conexión: " . mysqli_connect_error());
+    }
 ?>
 
 <!doctype html>
@@ -21,6 +23,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   </head>
   <body>
+
+    <!-- Navegacion -->
+
     <header>
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
@@ -67,8 +72,10 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
+                                    <path d="M10.828.122A.5.5 0 0 1 11 .5v15a.5.5 0 0 1-.684.47L5.5 14.87l-4.816 1.1A.5.5 0 0 1 0 15.5v-15a.5.5 0 0 1 .672-.476l4.86 1.457 4.316-1.328a.5.5 0 0 1-.02-.031zM11.5 15h2a.5.5 0 0 0 0-1h-2a.5.5 0 0 0 0 1zm1-1.5a.5.5 0 1 1-1 0v-10a.5.5 0 1 1 1 0v10z"/>
+                                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2a.5.5 0 0 1 .5-.5zm-1-1a.5.5 0 0 1 1 0v1a.5.5 0 0 1-1 0v-1zm0-2a.5.5 0 0 1 1 0v1a.5.5 0 0 1-1 0v-1zm0-2a.5.5 0 0 1 1 0v1a.5.5 0 0 1-1 0v-1zm0-2a.5.5 0 0 1 1 0v1a.5.5 0 0 1-1 0v-1z"/>
+                                    <path fill-rule="evenodd" d="M5.5 1v1h-1V1h1z"/>
                                 </svg>
                                 Ingresar
                             </a>
@@ -76,8 +83,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
-                                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" />
+                                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+                                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
                                 </svg>
                                 Registrarse
                             </a>
@@ -89,6 +96,8 @@
           </nav>
     </header>
 
+    <!-- Formulario de Contacto -->
+
     <div class="container-fluid d-flex justify-content-center align-items-center" style="min-height: 670px; background-color: #164773;">
         <div class="row align-items-center mx-auto">
             <div class="col-lg-6">
@@ -98,6 +107,7 @@
                       <p class="card-text text-white">¿Tenés alguna pregunta? ¡Acá estamos para ayudarte! Completa el formulario a continuación y nos vamos a poner en contacto con vos en la brevedad.</p>
                     
                     <!-- Formulario -->
+
                     <form action="#" name="probando" method="post">
                         <div class="mb-3">
                             <label for="nombre" class="form-label" style="color: white;">Nombre</label>
@@ -111,20 +121,29 @@
                             <label for="telefono" class="form-label" style="color: white;">Teléfono</label>
                             <input type="text" name="telefono" class="form-control" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label" style="color: white;">Fecha</label>
+                            <input type="text" name="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" readonly>
+                        </div>
                         <div class="d-grid gap-2">
                             <button type="submit" name="registro" class="btn btn-secondary">Enviar</button>
                             <button type="reset" class="btn btn-secondary">Limpiar</button>
                         </div>
                     </form>
 
+                    <!-- Fin Formulario -->
+
                     </div>
                 </div>
                     <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                       <img src="images/imagen-boxeadora.jpg" alt="Imagen de contacto" class="img-fluid rounded float-end" style="max-width: 600px; margin-right: -1500px; margin-top: -600px; border: 2px solid black;">
+                       <img src="images/imagen-boxeadora.jpg" alt="Imagen de contacto" class="img-fluid rounded float-end" style="max-width: 600px; margin-right: -1500px; margin-top: -700px; border: 2px solid black;">
                     </div>
             </div>
         </div>
     </div>
+
+    <!-- Fin Formulario de Contacto -->
+
     <footer>
         <div class="bg-black p-1">
             <hr class="border border-white border-1 opacity-30 mx-auto w-50" />
@@ -144,16 +163,18 @@
 <?php
 
 if(isset($_POST['registro'])){
-    $nombre= $_POST ['nombre'];
-    $correo= $_POST ['correo'];
-    $telefono= $_POST ['telefono'];
+    $nombre= $_POST['nombre'];
+    $correo= $_POST['correo'];
+    $telefono= $_POST['telefono'];
+    $fecha= $_POST['fecha'];
 
-    $insertarDatos = "INSERT INTO datos VALUES ('$nombre', '$correo', '$telefono', '')";
-    $ejecutarInsertar = mysqli_query ($enlace, $insertarDatos);
+    $insertarDatos = "INSERT INTO datos (nombre, correo, telefono, fecha) VALUES ('$nombre', '$correo', '$telefono', '$fecha')";
+    $ejecutarInsertar = mysqli_query($enlace, $insertarDatos);
 
     // Verificar si la consulta se ejecutó correctamente
+
     if ($ejecutarInsertar) {
-        echo '<script>alert("Mail enviado correctamente");</script>';
+        echo '<script>alert("Mail enviado correctamente el ' . $fecha . '");</script>';
     } else {
         echo '<script>alert("Error al enviar el correo");</script>';
     }
