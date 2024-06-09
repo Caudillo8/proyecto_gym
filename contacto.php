@@ -1,14 +1,7 @@
 <!-- conexión al Formulario -->
 
 <?php
-
-        $servidor = "localhost:3307";
-        $usuario = "root";
-        $clave = "";
-        $baseDeDatos = "gimnasio";
-
-        $enlace = mysqli_connect ($servidor, $usuario, $clave, $baseDeDatos)
-
+include('conexion.php');
 ?>
 
 <!doctype html>
@@ -112,8 +105,8 @@
                             <input type="text" name="telefono" class="form-control" required>
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" name="registro" class="btn btn-secondary">Enviar</button>
-                            <button type="reset" class="btn btn-secondary">Limpiar</button>
+                            <button type="submit" name="registro" class="btn btn-primary">Enviar</button>
+                            <button type="reset" class="btn btn-outline-primary">Limpiar</button>
                         </div>
                     </form>
 
