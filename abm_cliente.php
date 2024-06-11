@@ -1,9 +1,9 @@
 <?PHP
 include('conexion.php');
-//-------- session--------//
+//-------- PERMISO DE SESIÓN - Cliente
 session_start();
-if (!$_SESSION['ingreso']){
-    header( 'Location:login_cliente.php');
+if (!$_SESSION['ingresoCliente']) {
+    header('Location: login_cliente.php');
     exit();
 }
 
