@@ -1,9 +1,9 @@
 <?PHP
 include('conexion.php');
-//-------- session--------//
+//-------- PERMISO DE SESIÓN - Profesor
 session_start();
-if (!$_SESSION['ingreso']){
-    header( 'Location:login_profesor.php');
+if (!$_SESSION['ingresoProfesor']) {
+    header('Location: login_profesor.php');
     exit();
 }
 

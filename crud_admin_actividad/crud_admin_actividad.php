@@ -17,14 +17,10 @@ if (!$_SESSION['ingreso']) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css" type="text">
-    <title>CRUD Admin - Profesor</title>
+    <title>CRUD Admin - Actividad</title>
 </head>
 
 <body>
-
-    <?php
-    $buscar = $_POST['buscarprofesor'];
-    ?>
 
     <header>
         <nav class="navbar navbar-expand-lg bg-black">
@@ -122,65 +118,41 @@ if (!$_SESSION['ingreso']) {
 
     <div class="container my-5" style="min-height: 600px;">
         <div class="row">
-            <div class="col-6">
-                <form method="POST" action="">
-                    <div class="my-3">
-                        <label class="form-label">Buscar profesor:</label>
-                        <input class="form-control" type="text" name="buscarprofesor" id="" value="<?=$buscar?>">
-                        <input class="btn btn-primary my-1" type="submit" value="Buscar">
-                        <a class="btn btn-danger my-1" href="crud_admin_profesor.php">Reset</a>
-                    </div>
-                </form>
+            <div class="col-6 mx-auto">
+                <table class="table table-responsive">
+                    <tr>
+                        <td scope="col">Id</td>
+                        <td scope="col">Nombre</td>
+                        <td scope="col">Opciones</td>
+                    </tr>
+                    <?php
+                    $select = "SELECT id, nombre FROM actividades ORDER BY id DESC;";
+                    $query = mysqli_query($conexion, $select);
+                    while ($resultado = mysqli_fetch_array($query)) {
+                        ?>
+                        <tr>
+                            <td scope="row"><?php echo $resultado['0'] ?></td>
+                            <td scope="row"><?php echo $resultado['1'] ?></td>
+                            <td scope="row">
+                                <a class="btn btn-danger my-1"
+                                    href="sp_eliminaractividad.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
             </div>
         </div>
         <div class="row">
-            <table class="table table-responsive">
-                <tr>
-                    <td scope="col">Nombre</td>
-                    <td scope="col">Apellido</td>
-                    <td scope="col">DNI</td>
-                    <td scope="col">Telefono</td>
-                    <td scope="col">Mail</td>
-                    <td scope="col">Sexo</td>
-                    <td scope="col">Actividad</td>
-                    <td scope="col">Opciones</td>
-                </tr>
-                <?php
-                $select = "SELECT p.id, p.nombre, p.apellido, p.dni, p.telefono, p.mail, p.pass, p.sexo, p.fk_actividades, a.nombre AS 'Actividad' FROM profesores p, actividades a WHERE p.fk_actividades = a.id AND ( p.apellido LIKE '%$buscar%' OR p.nombre LIKE '%$buscar%' ) ORDER BY id DESC;";
-                $query = mysqli_query($conexion, $select);
-                while ($resultado = mysqli_fetch_array($query)) {
-                    ?>
-                    <tr>
-                        <td scope="row"><?php echo $resultado['1'] ?></td>
-                        <td scope="row"><?php echo $resultado['2'] ?></td>
-                        <td scope="row"><?php echo $resultado['3'] ?></td>
-                        <td scope="row"><?php echo $resultado['4'] ?></td>
-                        <td scope="row"><?php echo $resultado['5'] ?></td>
-                        <td scope="row"><?php echo $resultado['7'] ?></td>
-                        <td scope="row"><?php echo $resultado['9'] ?></td>
-                        <td scope="row">
-                            <a class="btn btn-primary my-1" href="editarprofesor.php?
-                            id=<?php echo $resultado['0'] ?>&
-                            nombre=<?php echo $resultado['1'] ?>&
-                            apellido=<?php echo $resultado['2'] ?>&
-                            dni=<?php echo $resultado['3'] ?>&
-                            telefono=<?php echo $resultado['4'] ?>&
-                            mail=<?php echo $resultado['5'] ?>&
-                            contrasena=<?php echo $resultado['6'] ?>&
-                            sexo=<?php echo $resultado['7'] ?>&
-                            fk_actividades=<?php echo $resultado['8'] ?>">
-                                Editar
-                            </a>
-                            <a class="btn btn-danger my-1" href="sp_eliminarprofesor.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
-                        </td>
-                    </tr>
-                    <?php
-                }
-                ?>
-            </table>
-        </div>
-        <div class="row">
-            <a class="btn btn-primary" href="nuevoprofesor.php">Agregar profesor</a>
+            <form action="sp_insertaractividad.php" method="POST">
+                <div class="col-6 mx-auto my-5">
+                    <h5>AGREGAR ACTIVIDAD</h5>
+                    <label class="form-label">Ingrese el nombre:</label>
+                    <input class="form-control" type="text" name="nombre" id="">
+                    <input class="btn btn-primary my-1" type="submit" value="Agregar actividad">
+                </div>
+            </form>
         </div>
     </div>
 
@@ -200,7 +172,7 @@ if (!$_SESSION['ingreso']) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-        
+
 </body>
 
 </html>

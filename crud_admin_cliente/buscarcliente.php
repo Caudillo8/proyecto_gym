@@ -122,7 +122,7 @@ if (!$_SESSION['ingreso']) {
 
     <div class="container my-5" style="min-height: 600px;">
         <div class="row">
-            <div class="col">
+            <div class="col-6">
                 <form method="POST" action="">
                     <div class="my-3">
                         <label class="form-label">Buscar cliente:</label>

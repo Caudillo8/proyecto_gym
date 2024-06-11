@@ -129,6 +129,11 @@ if (!$_SESSION['ingreso']) {
                     <h5 class="card-text text-white text-center">Ingresar a la GESTIÓN de PROFESORES</h5>
                     <a href="crud_admin_profesor/crud_admin_profesor.php" class="btn btn-primary">Ingresar</a>
                 </div>
+                <div class="col-md m-2 rounded d-flex flex-column justify-content-center align-items-center"
+                    style="background-color: black; height: 350px;">
+                    <h5 class="card-text text-white text-center">Ingresar a la GESTIÓN de ACTIVIDADES</h5>
+                    <a href="crud_admin_actividad/crud_admin_actividad.php" class="btn btn-primary">Ingresar</a>
+                </div>
             </div>
 
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
