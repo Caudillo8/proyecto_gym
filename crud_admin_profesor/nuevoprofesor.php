@@ -142,7 +142,11 @@ if (!$_SESSION['ingreso']) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Sexo:</label>
-                        <input class="form-control" type="text" name="sexo" id="">
+                        <select class="form-select" name="sexo">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="No binario">No binario</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mail:</label>
