@@ -154,7 +154,11 @@ if (!$_SESSION['ingreso']) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Sexo:</label>
-                        <input class="form-control" type="text" name="sexo" value="<?= $sexo ?>" id="">
+                        <select class="form-select" name="sexo">
+                            <option value="Masculino" <?php if($sexo == "Masculino") echo "selected"; ?>>Masculino</option>
+                            <option value="Femenino" <?php if($sexo == "Femenino") echo "selected"; ?>>Femenino</option>
+                            <option value="No binario" <?php if($sexo == "No binario") echo "selected"; ?>>No binario</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mail:</label>

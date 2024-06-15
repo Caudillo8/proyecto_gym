@@ -16,7 +16,8 @@ if (isset($_POST['ingresar'])) {
         session_destroy(); // primero cierra cualquier sesion que este abierta
         session_start(); // vuelve a abrir para registrar la unica y nueva sesion
         $_SESSION['ingresoProfesor'] = true;
-        header('Location: abm_profesor.php');
+        $_SESSION['idIngresoProfesor'] = $fila['id'];
+        header('Location: crud_profesor/abm_profesor.php');
     } else {
         header('Location: index.html');
     }

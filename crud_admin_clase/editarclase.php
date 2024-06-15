@@ -17,20 +17,19 @@ if (!$_SESSION['ingreso']) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css" type="text">
-    <title>Modificar cliente</title>
+    <title>Modificar clase</title>
 </head>
 
 <body>
 
     <?php
     $id = $_GET['id'];
-    $nombre = $_GET['nombre'];
-    $apellido = $_GET['apellido'];
-    $dni = $_GET['dni'];
-    $telefono = $_GET['telefono'];
-    $mail = $_GET['mail'];
-    $sexo = $_GET['sexo'];
-    $contrasena = $_GET['contrasena'];
+    $fecha = $_GET['fecha'];
+    $inicio = $_GET['inicio'];
+    $fin = $_GET['fin'];
+    $fk_actividad = $_GET['fk_actividad'];
+    $cupos = $_GET['cupos'];
+    $comentarios = $_GET['comentarios'];
     ?>
 
     <header>
@@ -129,47 +128,48 @@ if (!$_SESSION['ingreso']) {
 
     <div class="container mb-5">
         <div class="row">
-            <form action="sp_editarcliente.php" method="POST">
+            <form action="sp_editarclase.php" method="POST">
                 <div class="col-6 mx-auto">
                     <div class="mb-3">
                         <label class="form-label" style="visibility:hidden">Id:</label>
                         <input class="form-control" type="text" name="id" value="<?= $id ?>" id="" style="visibility:hidden">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Nombre:</label>
-                        <input class="form-control" type="text" name="nombre" value="<?= $nombre ?>" id="">
+                        <label class="form-label">Fecha:</label>
+                        <input class="form-control" type="date" name="fecha" value="<?= $fecha ?>" id="">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Apellido:</label>
-                        <input class="form-control" type="text" name="apellido" value="<?= $apellido ?>" id="">
+                        <label class="form-label">Horario de inicio:</label>
+                        <input class="form-control" type="time" name="inicio" value="<?= $inicio ?>" id="">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">DNI:</label>
-                        <input class="form-control" type="text" name="dni" value="<?= $dni ?>" id="">
+                        <label class="form-label">Horario de final:</label>
+                        <input class="form-control" type="time" name="fin" value="<?= $fin ?>" id="">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Telefono:</label>
-                        <input class="form-control" type="text" name="telefono" value="<?= $telefono ?>" id="">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Sexo:</label>
-                        <select class="form-select" name="sexo">
-                            <option value="Masculino" <?php if($sexo == "Masculino") echo "selected"; ?>>Masculino</option>
-                            <option value="Femenino" <?php if($sexo == "Femenino") echo "selected"; ?>>Femenino</option>
-                            <option value="No binario" <?php if($sexo == "No binario") echo "selected"; ?>>No binario</option>
+                        <label class="form-label">Actividad:</label>
+                        <select class="form-select" name="fk_actividad">
+                            <?php
+                            $query = mysqli_query($conexion, "SELECT * FROM actividades;");
+                            while($datos = mysqli_fetch_array($query)) {
+                            ?>
+                                <option value="<?php echo $datos[0] ?>" <?php if($datos[0] == $fk_actividad) echo "selected"; ?>><?php echo $datos[1] ?></option>
+                            <?php
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Mail:</label>
-                        <input class="form-control" type="text" name="mail" value="<?= $mail ?>" id="">
+                        <label class="form-label">Cantidad de cupos:</label>
+                        <input class="form-control" type="text" name="cupos" value="<?= $cupos ?>" id="">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Contrasena:</label>
-                        <input class="form-control" type="text" name="contrasena" value="<?= $contrasena ?>" id="">
+                        <label class="form-label">Comentario:</label>
+                        <input class="form-control" type="textarea" name="comentarios" value="<?= $comentarios ?>" id="">
                     </div>
                     <div class="mb-3">
                         <input class="btn btn-primary" type="submit" value="Modificar">
-                        <a class="btn btn-outline-primary" href="crud_admin_cliente.php">Cancelar</a>
+                        <a class="btn btn-outline-primary" href="crud_admin_clase.php">Cancelar</a>
                     </div>
                 </div>
             </form>
@@ -192,7 +192,7 @@ if (!$_SESSION['ingreso']) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-        
+
 </body>
 
 </html>

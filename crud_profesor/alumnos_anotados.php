@@ -1,37 +1,29 @@
 <?php
 include ('../conexion.php');
-//-------- PERMISO DE SESIÓN - Admin
+//-------- PERMISO DE SESIÓN - Profesor
 session_start();
-if (!$_SESSION['ingreso']) {
-    header('Location:../login_admin.php');
+if (!$_SESSION['ingresoProfesor']) {
+    header('Location: login_profesor.php');
     exit();
 }
-?>
 
+$idIngresoProfesor = $_SESSION['idIngresoProfesor'];
+$idClase = $_GET['idClase'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alumnos inscriptos a una clase</title>
+    <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/style.css" type="text">
-    <title>Modificar cliente</title>
 </head>
 
 <body>
-
-    <?php
-    $id = $_GET['id'];
-    $nombre = $_GET['nombre'];
-    $apellido = $_GET['apellido'];
-    $dni = $_GET['dni'];
-    $telefono = $_GET['telefono'];
-    $mail = $_GET['mail'];
-    $sexo = $_GET['sexo'];
-    $contrasena = $_GET['contrasena'];
-    ?>
 
     <header>
         <nav class="navbar navbar-expand-lg bg-black">
@@ -127,52 +119,38 @@ if (!$_SESSION['ingreso']) {
         </nav>
     </header>
 
-    <div class="container mb-5">
+    <div class="container py-5" style="min-height: 670px;">
         <div class="row">
-            <form action="sp_editarcliente.php" method="POST">
-                <div class="col-6 mx-auto">
-                    <div class="mb-3">
-                        <label class="form-label" style="visibility:hidden">Id:</label>
-                        <input class="form-control" type="text" name="id" value="<?= $id ?>" id="" style="visibility:hidden">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Nombre:</label>
-                        <input class="form-control" type="text" name="nombre" value="<?= $nombre ?>" id="">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Apellido:</label>
-                        <input class="form-control" type="text" name="apellido" value="<?= $apellido ?>" id="">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">DNI:</label>
-                        <input class="form-control" type="text" name="dni" value="<?= $dni ?>" id="">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Telefono:</label>
-                        <input class="form-control" type="text" name="telefono" value="<?= $telefono ?>" id="">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Sexo:</label>
-                        <select class="form-select" name="sexo">
-                            <option value="Masculino" <?php if($sexo == "Masculino") echo "selected"; ?>>Masculino</option>
-                            <option value="Femenino" <?php if($sexo == "Femenino") echo "selected"; ?>>Femenino</option>
-                            <option value="No binario" <?php if($sexo == "No binario") echo "selected"; ?>>No binario</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Mail:</label>
-                        <input class="form-control" type="text" name="mail" value="<?= $mail ?>" id="">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Contrasena:</label>
-                        <input class="form-control" type="text" name="contrasena" value="<?= $contrasena ?>" id="">
-                    </div>
-                    <div class="mb-3">
-                        <input class="btn btn-primary" type="submit" value="Modificar">
-                        <a class="btn btn-outline-primary" href="crud_admin_cliente.php">Cancelar</a>
-                    </div>
-                </div>
-            </form>
+            <div class="col">
+                <h2>Alumnos anotados a la clase seleccionada:</h2>
+                <table class="table table-responsive">
+                    <tr>
+                        <td scope="col">Apellido</td>
+                        <td scope="col">Nombre</td>
+                        <td scope="col">DNI</td>
+                        <td scope="col">Teléfono</td>
+                        <td scope="col">Mail</td>
+                        <td scope="col">Sexo</td>
+                    </tr>
+                    <?php
+                    $select = "SELECT cl.id AS id_cliente, cl.apellido, cl.nombre, cl.dni, cl.telefono, cl.mail, cl.sexo FROM reservas r JOIN clientes cl ON r.fk_cliente = cl.id WHERE r.fk_clase = $idClase;";
+                    $query = mysqli_query($conexion, $select);
+                    while ($resultado = mysqli_fetch_array($query)) {
+                        ?>
+                        <tr>
+                            <td scope="row"><?php echo $resultado['1'] ?></td>
+                            <td scope="row"><?php echo $resultado['2'] ?></td>
+                            <td scope="row"><?php echo $resultado['3'] ?></td>
+                            <td scope="row"><?php echo $resultado['4'] ?></td>
+                            <td scope="row"><?php echo $resultado['5'] ?></td>
+                            <td scope="row"><?php echo $resultado['6'] ?></td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+                <a href="abm_profesor.php" class="btn btn-outline-primary">Volver atrás</a>
+            </div>
         </div>
     </div>
 
@@ -188,11 +166,13 @@ if (!$_SESSION['ingreso']) {
             <h6 class="text-center text-white mb-1">Yedro Fernando</h6>
         </div>
     </footer>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-        
+
 </body>
 
 </html>
+
+<?php
+mysqli_close($conexion);
