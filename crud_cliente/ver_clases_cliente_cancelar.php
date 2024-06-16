@@ -20,5 +20,8 @@ if(!$query) {
     echo ("No se pudo cancelar el cupo.");
 }
 else {
+    // ACTUALIZO CANT CUPO CLASE
+    $_query = "UPDATE clases SET cupos = ( cupos + 1) WHERE id = $idCancelarClase;" ;
+    $_rtdo = mysqli_query($conexion, $_query);
     header("Location: ver_clases_cliente.php");
 }

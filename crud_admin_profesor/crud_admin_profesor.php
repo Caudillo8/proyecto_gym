@@ -141,7 +141,7 @@ if (!$_SESSION['ingreso']) {
                     <td scope="col">Opciones</td>
                 </tr>
                 <?php
-                $select = "SELECT p.id, p.nombre, p.apellido, p.dni, p.telefono, p.mail, p.pass, p.sexo, p.fk_actividades, a.nombre AS 'Actividad' FROM profesores p, actividades a WHERE p.fk_actividades = a.id ORDER BY id DESC;";
+                $select = "SELECT p.id, p.nombre, p.apellido, p.dni, p.telefono, p.mail, p.pass, p.sexo, p.fk_actividades, a.nombre AS Actividad FROM profesores p, actividades a WHERE p.fk_actividades = a.id ORDER BY id DESC;";
                 $query = mysqli_query($conexion, $select);
                 while ($resultado = mysqli_fetch_array($query)) {
                     ?>

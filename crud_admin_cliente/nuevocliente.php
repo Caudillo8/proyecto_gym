@@ -145,7 +145,6 @@ if (!$_SESSION['ingreso']) {
                         <select class="form-select" name="sexo">
                             <option value="Masculino">Masculino</option>
                             <option value="Femenino">Femenino</option>
-                            <option value="No binario">No binario</option>
                         </select>
                     </div>
                     <div class="mb-3">
