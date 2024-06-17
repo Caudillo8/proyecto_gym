@@ -83,47 +83,5 @@ body {
         margin-top: -5%;
         display: flex;
     }
-    
-    body {
-        background-color: #164773;
-    }
-
-    .card {
-        max-width: 1000px;
-        background-color: black;
-    }
-
-    .card-body {
-        color: white;
-    }
-
-    .card-title {
-        color: white;
-    }
-
-    .card-text {
-        color: white;
-    }
-
-    .form-label {
-        color: white;
-    }
-
-    .btn {
-        background-color: #343a40;
-        color: white;
-        border-color: #343a40;
-    }
-
-    .btn:hover {
-        background-color: #23272b;
-        border-color: #23272b;
-    }
-
-    .img-fluid {
-        max-width: 600px;
-        border: 2px solid black;
-    }
-
 
 }
