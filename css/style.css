@@ -72,7 +72,30 @@ section {
     margin-left: 0px; /* Margen derecho */
     width: 100px; /* Ancho del GIF */
     height: auto; /* Altura automática para mantener la proporción */
-}       
+}
+
+/* Estilo para el footer */
+footer .bg-black {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  padding: 20px; /* Ajusta el espaciado interno según sea necesario */
+}
+
+/* Estilo para el contenido de texto */
+footer .text-content {
+  flex: 1;
+}
+
+/* Estilo para la imagen */
+.small-image {
+  max-width: 500px; /* Ajusta el tamaño máximo de la imagen según sea necesario */
+  height: auto;
+  margin-left: 1200px; /* Espacio entre el texto y la imagen */
+  margin-top: -470px;
+}
 
   @media (max-width: 480px) {
 
@@ -99,4 +122,10 @@ section {
       margin-top: 0px; /* Ajusta este valor según sea necesario */
       margin-left: 0px; /* Ajusta este valor según sea necesario */
     }
+
+    .custom-class {
+      /* Estilos personalizados para la imagen */
+      display: none;
+  }
+
 }
