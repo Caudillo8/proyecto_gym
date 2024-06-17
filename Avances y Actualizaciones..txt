@@ -10,3 +10,4 @@
 10) Actualmente, viendo como mejorar la estética de la página.
 11) Modificación al Index, ya tiene el nombre de la página oficial, parrafos, gif, responsive, etc.
 12) Contacto ahora con responsive.
+13) Footer con imagen .png en Index
