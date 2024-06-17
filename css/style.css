@@ -53,6 +53,17 @@ body {
     text-align: center;
   }
 
+/* Estilo para el contenedor principal */
+.main-container {
+  display: flex;
+  justify-content: space-between; /* Ajusta el espacio entre las secciones */
+}
+
+section {
+  margin-top: -100px; /* Ajusta este valor según sea necesario */
+  margin-left: -500px; /* Ajusta este valor según sea necesario */
+}
+
 /* Es el gif del hombre corriendo */
 
 .mi-imagen {
@@ -84,4 +95,8 @@ body {
         display: flex;
     }
 
+    section {
+      margin-top: 0px; /* Ajusta este valor según sea necesario */
+      margin-left: 0px; /* Ajusta este valor según sea necesario */
+    }
 }
