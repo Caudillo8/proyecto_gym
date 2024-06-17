@@ -1,33 +1,31 @@
-<!-- conexión al Formulario -->
-
 <?php
-
-include('conexion.php');
-
-if (!$conexion) {
-    die("Error en la conexión: " . mysqli_connect_error());
+include ('../conexion.php');
+//-------- PERMISO DE SESIÓN - Admin
+session_start();
+if (!$_SESSION['ingreso']) {
+    header('Location:../login_admin.php');
+    exit();
 }
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contacto</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css" type="text">
+    <title>CRUD Admin - Profesor</title>
 </head>
 
 <body>
 
-    <!-- Navegacion -->
     <header>
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
-                <a class="navbar-brand text-white" href="index.html">
+                <a class="navbar-brand text-white" href="../index.html">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-person-arms-up" viewBox="0 0 16 16">
                         <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
@@ -44,7 +42,7 @@ if (!$conexion) {
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="index_agenda.php">
+                            <a class="nav-link text-white" href="../index_agenda.php">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-calendar-week" viewBox="0 0 16 16">
                                     <path
@@ -56,7 +54,7 @@ if (!$conexion) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="crud_admin.php">
+                            <a class="nav-link text-white" href="../crud_admin.php">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                     <path
@@ -66,7 +64,7 @@ if (!$conexion) {
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="contacto.php">
+                            <a class="nav-link text-white" href="../contacto.php">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-telephone-fill" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
@@ -79,7 +77,7 @@ if (!$conexion) {
                     <div class="d-flex">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="login_profesor.php">
+                                <a class="nav-link text-white" href="../login_profesor.php">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-file-person" viewBox="0 0 16 16">
                                         <path
@@ -90,7 +88,7 @@ if (!$conexion) {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="login_cliente.php">
+                                <a class="nav-link text-white" href="../login_cliente.php">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-file-person" viewBox="0 0 16 16">
                                         <path
@@ -101,7 +99,7 @@ if (!$conexion) {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="login_admin.php">
+                                <a class="nav-link text-white" href="../login_admin.php">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-file-person" viewBox="0 0 16 16">
                                         <path
@@ -118,57 +116,68 @@ if (!$conexion) {
         </nav>
     </header>
 
-    <!-- Formulario de Contacto -->
-
-    <div class="container-fluid d-flex justify-content-center align-items-center"
-        style="min-height: 670px; background-color: #164773;">
-        <div class="row align-items-center mx-auto">
-            <div class="col-lg-6">
-                <div class="card p-3 my-3 mx-auto" style="max-width: 1000px; background-color:black">
-                    <div class="card-body">
-                        <h1 class="card-title text-white">Contacto</h1>
-                        <p class="card-text text-white">¿Tenés alguna pregunta? ¡Acá estamos para ayudarte! Completa el
-                            formulario a continuación y nos vamos a poner en contacto con vos en la brevedad.</p>
-
-                        <!-- Formulario -->
-
-                        <form action="#" name="probando" method="post">
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label" style="color: white;">Nombre</label>
-                                <input type="text" name="nombre" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="correo" class="form-label" style="color: white;">Correo electrónico</label>
-                                <input type="email" name="correo" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="telefono" class="form-label" style="color: white;">Teléfono</label>
-                                <input type="text" name="telefono" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="fecha" class="form-label" style="color: white;">Fecha</label>
-                                <input type="text" name="fecha" class="form-control"
-                                    value="<?php echo date('Y-m-d'); ?>" readonly>
-                            </div>
-                            <div class="d-grid gap-2">
-                                <button type="submit" name="registro" class="btn btn-secondary">Enviar</button>
-                                <button type="reset" class="btn btn-secondary">Limpiar</button>
-                            </div>
-                        </form>
-
-                        <!-- Fin Formulario -->
-
+    <div class="container my-5" style="min-height: 600px;">
+        <div class="row">
+            <div class="col-6">
+                <form method="POST" action="buscarprofesor.php">
+                    <div class="my-3">
+                        <label class="form-label">Buscar profesor:</label>
+                        <input class="form-control" type="text" name="buscarprofesor" id="">
+                        <input class="btn btn-primary my-1" type="submit" value="Buscar">
                     </div>
-                </div>
-                <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                    <img src="images/imagen-boxeadora.jpg" alt="Imagen de contacto" class="img-fluid rounded float-end"
-                        style="max-width: 600px; margin-right: -1500px; margin-top: -700px; border: 2px solid black;">
-                </div>
+                </form>
             </div>
         </div>
+        <div class="row">
+            <table class="table table-responsive">
+                <tr>
+                    <td scope="col">Nombre</td>
+                    <td scope="col">Apellido</td>
+                    <td scope="col">DNI</td>
+                    <td scope="col">Telefono</td>
+                    <td scope="col">Mail</td>
+                    <td scope="col">Sexo</td>
+                    <td scope="col">Actividad</td>
+                    <td scope="col">Opciones</td>
+                </tr>
+                <?php
+                $select = "SELECT p.id, p.nombre, p.apellido, p.dni, p.telefono, p.mail, p.pass, p.sexo, p.fk_actividades, a.nombre AS 'Actividad' FROM profesores p, actividades a WHERE p.fk_actividades = a.id ORDER BY id DESC;";
+                $query = mysqli_query($conexion, $select);
+                while ($resultado = mysqli_fetch_array($query)) {
+                    ?>
+                    <tr>
+                        <td scope="row"><?php echo $resultado['1'] ?></td>
+                        <td scope="row"><?php echo $resultado['2'] ?></td>
+                        <td scope="row"><?php echo $resultado['3'] ?></td>
+                        <td scope="row"><?php echo $resultado['4'] ?></td>
+                        <td scope="row"><?php echo $resultado['5'] ?></td>
+                        <td scope="row"><?php echo $resultado['7'] ?></td>
+                        <td scope="row"><?php echo $resultado['9'] ?></td>
+                        <td scope="row">
+                            <a class="btn btn-primary my-1" href="editarprofesor.php?
+                            id=<?php echo $resultado['0'] ?>&
+                            nombre=<?php echo $resultado['1'] ?>&
+                            apellido=<?php echo $resultado['2'] ?>&
+                            dni=<?php echo $resultado['3'] ?>&
+                            telefono=<?php echo $resultado['4'] ?>&
+                            mail=<?php echo $resultado['5'] ?>&
+                            contrasena=<?php echo $resultado['6'] ?>&
+                            sexo=<?php echo $resultado['7'] ?>&
+                            fk_actividades=<?php echo $resultado['8'] ?>">
+                                Editar
+                            </a>
+                            <a class="btn btn-danger my-1" href="sp_eliminarprofesor.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </table>
+        </div>
+        <div class="row">
+            <a class="btn btn-primary" href="nuevoprofesor.php">Agregar profesor</a>
+        </div>
     </div>
-
-    <!-- Fin Formulario de Contacto -->
 
     <footer>
         <div class="bg-black p-1">
@@ -182,33 +191,11 @@ if (!$conexion) {
             <h6 class="text-center text-white mb-1">Yedro Fernando</h6>
         </div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
 </body>
-
-<!-- Funcion del Formulario -->
-
-<?php
-
-if (isset($_POST['registro'])) {
-    $nombre = $_POST['nombre'];
-    $correo = $_POST['correo'];
-    $telefono = $_POST['telefono'];
-    $fecha = $_POST['fecha'];
-
-    $insertarDatos = "INSERT INTO datos (nombre, correo, telefono, fecha) VALUES ('$nombre', '$correo', '$telefono', '$fecha')";
-    $ejecutarInsertar = mysqli_query($conexion, $insertarDatos);
-
-    // Verificar si la consulta se ejecutó correctamente
-
-    if ($ejecutarInsertar) {
-        echo '<script>alert("Mail enviado correctamente el ' . $fecha . '");</script>';
-    } else {
-        echo '<script>alert("Error al enviar el correo");</script>';
-    }
-}
-
-?>
 
 </html>

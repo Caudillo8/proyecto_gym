@@ -1,29 +1,43 @@
-<!-- conexión al Formulario -->
-
 <?php
+include ('conexion.php');
+session_start();
 
-include('conexion.php');
+//$_SESSION['ingresoCliente'] = false; // que sea lo primero que se invoca!!!!!!!!!!!!!!
 
-if (!$conexion) {
-    die("Error en la conexión: " . mysqli_connect_error());
+if (isset($_POST['ingresar'])) {
+    $clave = ($_POST['clave']);
+    $usuario = $_POST['usuario'];
+    //--------------CLIENTES---------------------------------
+    $query = "SELECT * FROM clientes WHERE mail = '$usuario' AND pass = '$clave';";
+    $resultado = mysqli_query($conexion, $query);
+    $fila = mysqli_fetch_assoc($resultado);
+
+    if ($fila) {
+        session_destroy(); // primero cierra cualquier sesion que este abierta
+        session_start(); // vuelve a abrir para registrar la unica y nueva sesion
+        $_SESSION['ingresoCliente'] = true;
+        $_SESSION['idIngresoCliente'] = $fila['id'];
+        header('Location: crud_cliente/abm_cliente.php');
+    } else {
+        header('Location: index.html');
+    }
 }
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contacto</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/style.css" type="text/css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Login Cliente</title>
 </head>
 
-<body>
+<body style="background-color: #000;">
 
-    <!-- Navegacion -->
     <header>
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
@@ -118,57 +132,41 @@ if (!$conexion) {
         </nav>
     </header>
 
-    <!-- Formulario de Contacto -->
-
-    <div class="container-fluid d-flex justify-content-center align-items-center"
-        style="min-height: 670px; background-color: #164773;">
-        <div class="row align-items-center mx-auto">
-            <div class="col-lg-6">
-                <div class="card p-3 my-3 mx-auto" style="max-width: 1000px; background-color:black">
-                    <div class="card-body">
-                        <h1 class="card-title text-white">Contacto</h1>
-                        <p class="card-text text-white">¿Tenés alguna pregunta? ¡Acá estamos para ayudarte! Completa el
-                            formulario a continuación y nos vamos a poner en contacto con vos en la brevedad.</p>
-
-                        <!-- Formulario -->
-
-                        <form action="#" name="probando" method="post">
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label" style="color: white;">Nombre</label>
-                                <input type="text" name="nombre" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="correo" class="form-label" style="color: white;">Correo electrónico</label>
-                                <input type="email" name="correo" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="telefono" class="form-label" style="color: white;">Teléfono</label>
-                                <input type="text" name="telefono" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="fecha" class="form-label" style="color: white;">Fecha</label>
-                                <input type="text" name="fecha" class="form-control"
-                                    value="<?php echo date('Y-m-d'); ?>" readonly>
-                            </div>
-                            <div class="d-grid gap-2">
-                                <button type="submit" name="registro" class="btn btn-secondary">Enviar</button>
-                                <button type="reset" class="btn btn-secondary">Limpiar</button>
-                            </div>
-                        </form>
-
-                        <!-- Fin Formulario -->
-
+    <div style="background-color: #164773;">
+        <div class="container">
+            <div class="p-5 row mx-auto">
+                <div class="col-lg-4 mx-auto">
+                    <div class="card border-white" style="background-color: #000;">
+                        <div class="card-header text-white text-center">
+                            <?php
+                            if(isset($_SESSION['ingresoCliente'])) {
+                                echo "YA ESTAS LOGUEADO";
+                            } else {
+                                echo "Ingreso Cliente";
+                            }
+                            ?>
+                        </div>
+                        <div class="card-body text-white" style="background-color: #000;">
+                            <form action="" method="post">
+                                <div class="my-3">
+                                    <label class="form-label">Usuario (mail):</label>
+                                    <input <?php if(isset($_SESSION['ingresoCliente'])) echo "disabled" ?> class="form-control" type="text" name="usuario">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Contraseña:</label>
+                                    <input <?php if(isset($_SESSION['ingresoCliente'])) echo "disabled" ?> class="form-control" type="password" name="clave">
+                                </div>
+                                <div class="my-3 d-flex flex-column align-items-center justify-content-center">
+                                    <input <?php if(isset($_SESSION['ingresoCliente'])) echo 'style="visibility:hidden"' ?> class="btn btn-primary" type="submit" name="ingresar" value="Ingresar">
+                                    <a class="btn btn-outline-primary my-2" href="cerrar_sesion.php">Cerrar sesión</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                    <img src="images/imagen-boxeadora.jpg" alt="Imagen de contacto" class="img-fluid rounded float-end"
-                        style="max-width: 600px; margin-right: -1500px; margin-top: -700px; border: 2px solid black;">
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Fin Formulario de Contacto -->
 
     <footer>
         <div class="bg-black p-1">
@@ -187,28 +185,8 @@ if (!$conexion) {
         crossorigin="anonymous"></script>
 </body>
 
-<!-- Funcion del Formulario -->
+</html>
 
 <?php
-
-if (isset($_POST['registro'])) {
-    $nombre = $_POST['nombre'];
-    $correo = $_POST['correo'];
-    $telefono = $_POST['telefono'];
-    $fecha = $_POST['fecha'];
-
-    $insertarDatos = "INSERT INTO datos (nombre, correo, telefono, fecha) VALUES ('$nombre', '$correo', '$telefono', '$fecha')";
-    $ejecutarInsertar = mysqli_query($conexion, $insertarDatos);
-
-    // Verificar si la consulta se ejecutó correctamente
-
-    if ($ejecutarInsertar) {
-        echo '<script>alert("Mail enviado correctamente el ' . $fecha . '");</script>';
-    } else {
-        echo '<script>alert("Error al enviar el correo");</script>';
-    }
-}
-
+mysqli_close($conexion);
 ?>
-
-</html>

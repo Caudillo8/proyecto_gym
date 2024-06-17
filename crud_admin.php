@@ -1,29 +1,27 @@
-<!-- conexión al Formulario -->
-
 <?php
-
-include('conexion.php');
-
-if (!$conexion) {
-    die("Error en la conexión: " . mysqli_connect_error());
+include ('conexion.php');
+//-------- PERMISO DE SESIÓN - Admin
+session_start();
+if (!$_SESSION['ingreso']) {
+    header('Location:login_admin.php');
+    exit();
 }
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contacto</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css" type="text">
+    <title>CRUD Admin</title>
 </head>
 
-<body>
+<body style="background-color: black;">
 
-    <!-- Navegacion -->
     <header>
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
@@ -118,57 +116,38 @@ if (!$conexion) {
         </nav>
     </header>
 
-    <!-- Formulario de Contacto -->
-
-    <div class="container-fluid d-flex justify-content-center align-items-center"
-        style="min-height: 670px; background-color: #164773;">
-        <div class="row align-items-center mx-auto">
-            <div class="col-lg-6">
-                <div class="card p-3 my-3 mx-auto" style="max-width: 1000px; background-color:black">
-                    <div class="card-body">
-                        <h1 class="card-title text-white">Contacto</h1>
-                        <p class="card-text text-white">¿Tenés alguna pregunta? ¡Acá estamos para ayudarte! Completa el
-                            formulario a continuación y nos vamos a poner en contacto con vos en la brevedad.</p>
-
-                        <!-- Formulario -->
-
-                        <form action="#" name="probando" method="post">
-                            <div class="mb-3">
-                                <label for="nombre" class="form-label" style="color: white;">Nombre</label>
-                                <input type="text" name="nombre" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="correo" class="form-label" style="color: white;">Correo electrónico</label>
-                                <input type="email" name="correo" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="telefono" class="form-label" style="color: white;">Teléfono</label>
-                                <input type="text" name="telefono" class="form-control" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="fecha" class="form-label" style="color: white;">Fecha</label>
-                                <input type="text" name="fecha" class="form-control"
-                                    value="<?php echo date('Y-m-d'); ?>" readonly>
-                            </div>
-                            <div class="d-grid gap-2">
-                                <button type="submit" name="registro" class="btn btn-secondary">Enviar</button>
-                                <button type="reset" class="btn btn-secondary">Limpiar</button>
-                            </div>
-                        </form>
-
-                        <!-- Fin Formulario -->
-
-                    </div>
+    <div style="background-color: #164773;" class="p-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md m-2 rounded d-flex flex-column justify-content-center align-items-center"
+                    style="background-color: black; height: 350px;">
+                    <h5 class="card-text text-white text-center">Ingresar a la GESTIÓN de CLIENTES</h5>
+                    <a href="crud_admin_cliente/crud_admin_cliente.php" class="btn btn-primary">Ingresar</a>
                 </div>
-                <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                    <img src="images/imagen-boxeadora.jpg" alt="Imagen de contacto" class="img-fluid rounded float-end"
-                        style="max-width: 600px; margin-right: -1500px; margin-top: -700px; border: 2px solid black;">
+                <div class="col-md m-2 rounded d-flex flex-column justify-content-center align-items-center"
+                    style="background-color: black; height: 350px;">
+                    <h5 class="card-text text-white text-center">Ingresar a la GESTIÓN de PROFESORES</h5>
+                    <a href="crud_admin_profesor/crud_admin_profesor.php" class="btn btn-primary">Ingresar</a>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md m-2 rounded d-flex flex-column justify-content-center align-items-center"
+                    style="background-color: black; height: 350px;">
+                    <h5 class="card-text text-white text-center">Ingresar a la GESTIÓN de ACTIVIDADES</h5>
+                    <a href="crud_admin_actividad/crud_admin_actividad.php" class="btn btn-primary">Ingresar</a>
+                </div>
+                <div class="col-md m-2 rounded d-flex flex-column justify-content-center align-items-center"
+                    style="background-color: black; height: 350px;">
+                    <h5 class="card-text text-white text-center">Ingresar a la GESTIÓN de CLASES</h5>
+                    <a href="crud_admin_clase/crud_admin_clase.php" class="btn btn-primary">Ingresar</a>
+                </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+                crossorigin="anonymous"></script>
         </div>
     </div>
-
-    <!-- Fin Formulario de Contacto -->
 
     <footer>
         <div class="bg-black p-1">
@@ -182,33 +161,11 @@ if (!$conexion) {
             <h6 class="text-center text-white mb-1">Yedro Fernando</h6>
         </div>
     </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
 </body>
-
-<!-- Funcion del Formulario -->
-
-<?php
-
-if (isset($_POST['registro'])) {
-    $nombre = $_POST['nombre'];
-    $correo = $_POST['correo'];
-    $telefono = $_POST['telefono'];
-    $fecha = $_POST['fecha'];
-
-    $insertarDatos = "INSERT INTO datos (nombre, correo, telefono, fecha) VALUES ('$nombre', '$correo', '$telefono', '$fecha')";
-    $ejecutarInsertar = mysqli_query($conexion, $insertarDatos);
-
-    // Verificar si la consulta se ejecutó correctamente
-
-    if ($ejecutarInsertar) {
-        echo '<script>alert("Mail enviado correctamente el ' . $fecha . '");</script>';
-    } else {
-        echo '<script>alert("Error al enviar el correo");</script>';
-    }
-}
-
-?>
 
 </html>
