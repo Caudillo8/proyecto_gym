@@ -1,0 +1,12 @@
+1) Creé Contacto.
+2) Armé dicha página y respeté la estética que venimos trabajando con Index.
+3) Descargué la imagen "imagen-boxeadora".
+4) Pasé la imagen "imagen-boxeadora" por Photopea para bajarle la calidad para que cargue más rápido en la página.
+5) Inserté la imagen a la página creada previamente para que no esté solo el formulario en la página "Contacto".
+6) Convertí tanto index como contacto de HTML a PHP para posteriormente poder darle funcionalidad.
+7) Creé Correo.
+8) Finalmente eliminé Correo, no fué necesario para Contacto.
+9) Pude darle funcionalidad a Contacto. Una vez cargada la información, se envía correctamente.
+10) Actualmente, viendo como mejorar la estética de la página.
+11) Modificación al Index, ya tiene el nombre de la página oficial, parrafos, gif, responsive, etc.
+12) Contacto ahora con responsive.
