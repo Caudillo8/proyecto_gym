@@ -11,3 +11,4 @@
 11) Modificación al Index, ya tiene el nombre de la página oficial, parrafos, gif, responsive, etc.
 12) Contacto ahora con responsive.
 13) Footer con imagen .png en Index
+14) Emprolijé las lineas de Index, Contacto y "Style".
