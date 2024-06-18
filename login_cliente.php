@@ -5,7 +5,7 @@ session_start();
 //$_SESSION['ingresoCliente'] = false; // que sea lo primero que se invoca!!!!!!!!!!!!!!
 
 if (isset($_POST['ingresar'])) {
-    $clave = ($_POST['clave']);
+    $clave = md5($_POST['clave']);
     $usuario = $_POST['usuario'];
     //--------------CLIENTES---------------------------------
     $query = "SELECT * FROM clientes WHERE mail = '$usuario' AND pass = '$clave';";

@@ -18,7 +18,7 @@ $mail = $_POST['mail'];
 $sexo = $_POST['sexo'];
 $contrasena = $_POST['contrasena'];
 
-$update = "UPDATE clientes SET nombre='$nombre', apellido='$apellido', dni='$dni', telefono='$telefono', sexo='$sexo', mail='$mail', pass='$contrasena' WHERE id = $id;";
+$update = "UPDATE clientes SET nombre='$nombre', apellido='$apellido', dni='$dni', telefono='$telefono', sexo='$sexo', mail='$mail', pass=md5('$contrasena') WHERE id = $id;";
 $query = mysqli_query($conexion, $update);
 
 if(!$query) {
