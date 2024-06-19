@@ -23,5 +23,5 @@ if(!$query) {
     echo ("No se pudo insertar.");
 }
 else {
-    header("Location: crud_admin_cliente.php");
+    header("Location: crud_admin_cliente.php"); 
 }
