@@ -17,7 +17,7 @@ $sexo = $_POST['sexo'];
 $contrasena = $_POST['contrasena'];
 $fk_actividades = $_POST['fk_actividades'];
 
-$insert = "INSERT INTO profesores(apellido, nombre, dni, telefono, mail, sexo, pass, fk_actividades) VALUES ('$apellido','$nombre','$dni', '$telefono', '$mail', '$sexo', '$contrasena', '$fk_actividades');";
+$insert = "INSERT INTO profesores(apellido, nombre, dni, telefono, mail, sexo, pass, fk_actividades) VALUES ('$apellido','$nombre','$dni', '$telefono', '$mail', '$sexo', MD5('$contrasena'), '$fk_actividades');";
 $query = mysqli_query($conexion, $insert);
 
 if(!$query) {
