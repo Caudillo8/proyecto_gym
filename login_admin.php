@@ -5,6 +5,12 @@ session_start();
 //$_SESSION['ingreso'] = false; // que sea lo primero que se invoca!!!!!!!!!!!!!!
 
 if (isset($_POST['ingresar'])) {
+    if(! is_numeric($_POST['clave'])){
+        echo "<script language='JavaScript'>";
+        echo "alert('Error. Vuelve a identificarte');";
+        echo "</script>";
+        exit;
+    }
     $clave = md5($_POST['clave']);
     $usuario = $_POST['usuario'];
     //--------------ADMINISTRADORES---------------------------------
