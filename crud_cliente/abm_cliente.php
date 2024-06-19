@@ -173,7 +173,7 @@ $idIngresoCliente = $_SESSION['idIngresoCliente'];
                     } else {
                         $fecha = $_POST['almanaque'];
                     }
-                    $select = "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividad, a.nombre, c.cupos, c.comentarios FROM clases c, actividades a WHERE c.fk_actividad = a.id AND c.fecha = '$fecha' ORDER BY fecha DESC;";
+                    $select = "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividades, a.nombre, c.cupos, c.comentarios FROM clases c, actividades a WHERE c.fk_actividades = a.id AND c.fecha = '$fecha' ORDER BY fecha DESC;";
                     $query = mysqli_query($conexion, $select);
                     while ($resultado = mysqli_fetch_array($query)) {
                         ?>

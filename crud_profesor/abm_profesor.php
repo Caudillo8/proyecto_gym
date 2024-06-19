@@ -123,7 +123,7 @@ $idIngresoProfesor = $_SESSION['idIngresoProfesor'];
             <div class="col">
                 <h2>Tus datos:</h2>
                 <?php
-                $select = "SELECT p.id, apellido, p.nombre, telefono, dni, mail, sexo, fk_actividades, a.nombre FROM profesores p, actividades a WHERE fk_actividades = a.id AND p.id = $idIngresoProfesor;";
+                $select = "SELECT p.id, p.apellido, p.nombre, p.telefono, p.dni, p.mail, p.sexo, p.fk_actividades, a.nombre FROM profesores p, actividades a WHERE p.fk_actividades = a.id AND p.id = $idIngresoProfesor;";
                 $query = mysqli_query($conexion, $select);
                 $rtdo = mysqli_fetch_array($query);
                 ?>
@@ -177,7 +177,7 @@ $idIngresoProfesor = $_SESSION['idIngresoProfesor'];
                 $anio = date('Y', $timestamp);
 
                 // realizo la consulta y la imprimo en la tabla
-                $select = "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividad, a.nombre, c.cupos, c.comentarios AS nombre_actividad, c.cupos, c.comentarios FROM clases c JOIN actividades a ON c.fk_actividad = a.id JOIN profesores p ON p.fk_actividades = c.fk_actividad WHERE p.id = $idIngresoProfesor AND MONTH(c.fecha) = $mes AND YEAR(c.fecha) = $anio ORDER BY c.fecha DESC;";
+                $select = "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividades, a.nombre, c.cupos, c.comentarios AS nombre_actividad, c.cupos, c.comentarios FROM clases c JOIN actividades a ON c.fk_actividades = a.id JOIN profesores p ON p.fk_actividades = c.fk_actividades WHERE p.id = $idIngresoProfesor AND MONTH(c.fecha) = $mes AND YEAR(c.fecha) = $anio ORDER BY c.fecha DESC;";
                 $query = mysqli_query($conexion, $select);
                 while ($resultado = mysqli_fetch_array($query)) {
                     ?>

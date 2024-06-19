@@ -1,0 +1,102 @@
+/* Estilos generales */
+body {
+    background-color: #000;
+  }
+  
+  .navbar {
+    background-color: #000;
+  }
+  
+  .nav-link {
+    color: white;
+  }
+
+  /* Agenda celeste del index */
+
+.agenda-card {
+    /* Estilos para la tarjeta de Agenda */
+    background-color: #f0f0f0; /* Color de fondo */
+    padding: 10px 20px; /* Relleno interior con más espacio vertical */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 8px; /* Radio de borde para esquinas redondeadas */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.agenda-card .card-title {
+    /* Estilos para el título de la tarjeta de Agenda */
+    font-size: 1.25rem; /* Tamaño de fuente */
+    margin-bottom: 8px; /* Margen inferior */
+    margin-top: 0; /* Elimina el margen superior para alinear con el borde superior */
+}
+
+.agenda-card .btn-primary {
+    /* Estilos para el botón de la tarjeta de Agenda */
+    background-color: #007bff; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 10px 20px; /* Relleno interior */
+    border: none; /* Sin borde */
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.agenda-card .btn-primary:hover {
+    /* Estilos para el botón de la tarjeta de Agenda al pasar el mouse */
+    background-color: #0056b3; /* Color de fondo */
+}
+
+.agenda-celeste .btn-primary {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .agenda-celeste .card-title {
+    text-align: center;
+  }
+
+/* Estilo para el contenedor principal */
+.main-container {
+  display: flex;
+  justify-content: space-between; /* Ajusta el espacio entre las secciones */
+}
+
+section {
+  margin-top: -100px; /* Ajusta este valor según sea necesario */
+  margin-left: -500px; /* Ajusta este valor según sea necesario */
+}
+
+/* Es el gif del hombre corriendo */
+
+.mi-imagen {
+    float: right;
+    margin-top: 80px; /* Margen superior */
+    margin-left: 0px; /* Margen derecho */
+    width: 100px; /* Ancho del GIF */
+    height: auto; /* Altura automática para mantener la proporción */
+}       
+
+  @media (max-width: 480px) {
+
+
+    .gif-responsive {
+        display: none; /* Ocultar el GIF en pantallas más pequeñas */
+    }
+
+    .agenda-celeste {
+        background-color: #164773;
+        color: #fff; /* Color del texto */
+        padding: 10px 20px; /* Relleno interior */
+        border: none; /* Sin borde */
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .celeste{
+        margin-top: -5%;
+        display: flex;
+    }
+
+    section {
+      margin-top: 0px; /* Ajusta este valor según sea necesario */
+      margin-left: 0px; /* Ajusta este valor según sea necesario */
+    }
+}

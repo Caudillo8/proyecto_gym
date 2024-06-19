@@ -151,7 +151,7 @@ $idIngresoCliente = $_SESSION['idIngresoCliente'];
                         <td scope="col">Opciones</td>
                     </tr>
                     <?php
-                    $select = "SELECT DISTINCT c.id, c.fecha, c.inicio, c.fin, c.fk_actividad, a.nombre, c.cupos, c.comentarios FROM clases c JOIN actividades a ON c.fk_actividad = a.id JOIN reservas r ON r.fk_clase = c.id WHERE r.fk_cliente = $idIngresoCliente ORDER BY c.fecha DESC;";
+                    $select = "SELECT DISTINCT c.id, c.fecha, c.inicio, c.fin, c.fk_actividades, a.nombre, c.cupos, c.comentarios FROM clases c JOIN actividades a ON c.fk_actividades = a.id JOIN reservas r ON r.fk_clase = c.id WHERE r.fk_cliente = $idIngresoCliente ORDER BY c.fecha DESC;";
                     $query = mysqli_query($conexion, $select);
                     while($resultado = mysqli_fetch_array($query)) {
                         ?>
