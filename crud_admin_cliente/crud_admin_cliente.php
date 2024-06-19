@@ -26,13 +26,8 @@ if (!$_SESSION['ingreso']) {
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="../index.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-person-arms-up" viewBox="0 0 16 16">
-                        <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                        <path
-                            d="m5.93 6.704-.846 8.451a.768.768 0 0 0 1.523.203l.81-4.865a.59.59 0 0 1 1.165 0l.81 4.865a.768.768 0 0 0 1.523-.203l-.845-8.451A1.5 1.5 0 0 1 10.5 5.5L13 2.284a.796.796 0 0 0-1.239-.998L9.634 3.84a.7.7 0 0 1-.33.235c-.23.074-.665.176-1.304.176-.64 0-1.074-.102-1.305-.176a.7.7 0 0 1-.329-.235L4.239 1.286a.796.796 0 0 0-1.24.998l2.5 3.216c.317.316.475.758.43 1.204Z" />
-                    </svg>
-                    NombreSistema
+                    <img src="../images/logo.png" alt="Fit Fusion" style="width: 50px;">
+                    Fit Fusion
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -118,7 +113,7 @@ if (!$_SESSION['ingreso']) {
 
     <div class="container my-5" style="min-height: 600px;">
         <div class="row">
-            <div class="col-6">
+            <div class="col-sm-6">
                 <form method="POST" action="buscarcliente.php">
                     <div class="my-3">
                         <label class="form-label">Buscar cliente:</label>
@@ -129,30 +124,50 @@ if (!$_SESSION['ingreso']) {
             </div>
         </div>
         <div class="row">
-            <table class="table table-responsive">
-                <tr>
-                    <td scope="col">Nombre</td>
-                    <td scope="col">Apellido</td>
-                    <td scope="col">DNI</td>
-                    <td scope="col">Teléfono</td>
-                    <td scope="col">Mail</td>
-                    <td scope="col">Sexo</td>
-                    <td scope="col">Opciones</td>
-                </tr>
-                <?php
-                $select = "SELECT id, nombre, apellido, dni, telefono, mail, pass, sexo FROM clientes ORDER BY id DESC;";
-                $query = mysqli_query($conexion, $select);
-                while ($resultado = mysqli_fetch_array($query)) {
-                    ?>
+            <div class="table-responsive">
+                <table class="table">
                     <tr>
-                        <td scope="row"><?php echo $resultado['1'] ?></td>
-                        <td scope="row"><?php echo $resultado['2'] ?></td>
-                        <td scope="row"><?php echo $resultado['3'] ?></td>
-                        <td scope="row"><?php echo $resultado['4'] ?></td>
-                        <td scope="row"><?php echo $resultado['5'] ?></td>
-                        <td scope="row"><?php echo $resultado['7'] ?></td>
-                        <td scope="row">
-                            <a class="btn btn-primary my-1" href="editarcliente.php?
+                        <td scope="col">Nombre</td>
+                        <td scope="col">Apellido</td>
+                        <td scope="col">DNI</td>
+                        <td scope="col">Teléfono</td>
+                        <td scope="col">Mail</td>
+                        <td scope="col">Sexo</td>
+                        <td scope="col">Opciones</td>
+                    </tr>
+                    <?php
+                    // PAGINACION
+                    // reviso si esta vacio nume
+                    if (empty($_REQUEST['nume']) || $_REQUEST['nume'] == "") {
+                        $_REQUEST['nume'] = "1";
+                    }
+                    // realizo la consulta y traigo el numero de filas
+                    $select = "SELECT id, nombre, apellido, dni, telefono, mail, pass, sexo FROM clientes ORDER BY id DESC;";
+                    $query = mysqli_query($conexion, $select);
+                    $num_registros_query = @mysqli_num_rows($query);
+                    // establezco cuantos registros muestro por pagina y traigo nume
+                    $num_registros = 5;
+                    $pagina = $_REQUEST['nume'];
+                    // chequeo si ya estaba pasando de pagina o si arranca de cero
+                    if (is_numeric($pagina)) {
+                        $inicio = ($pagina - 1) * $num_registros;
+                    } else {
+                        $inicio = 0;
+                    }
+                    $busqueda = mysqli_query($conexion, "SELECT id, nombre, apellido, dni, telefono, mail, pass, sexo FROM clientes ORDER BY id DESC LIMIT $inicio, $num_registros;");
+                    $paginas = ceil($num_registros_query / $num_registros);
+                    // muestro los datos que me trajo la query
+                    while ($resultado = mysqli_fetch_array($busqueda)) {
+                        ?>
+                        <tr>
+                            <td scope="row"><?php echo $resultado['1'] ?></td>
+                            <td scope="row"><?php echo $resultado['2'] ?></td>
+                            <td scope="row"><?php echo $resultado['3'] ?></td>
+                            <td scope="row"><?php echo $resultado['4'] ?></td>
+                            <td scope="row"><?php echo $resultado['5'] ?></td>
+                            <td scope="row"><?php echo $resultado['7'] ?></td>
+                            <td scope="row">
+                                <a class="btn btn-primary my-1" href="editarcliente.php?
                             id=<?php echo $resultado['0'] ?>&
                             nombre=<?php echo $resultado['1'] ?>&
                             apellido=<?php echo $resultado['2'] ?>&
@@ -161,15 +176,39 @@ if (!$_SESSION['ingreso']) {
                             mail=<?php echo $resultado['5'] ?>&
                             contrasena=<?php echo $resultado['6'] ?>&
                             sexo=<?php echo $resultado['7'] ?>">
-                                Editar
-                            </a>
-                            <a class="btn btn-danger my-1" href="sp_eliminarcliente.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
-                        </td>
-                    </tr>
+                                    Editar
+                                </a>
+                                <a class="btn btn-danger my-1"
+                                    href="sp_eliminarcliente.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+            </div>
+            <!-- PAGINACION -->
+            <ul class="pagination pg-dark justify-content-center py-5 mb-0" style="float: none;">
+                <li class="page-item">
                     <?php
-                }
-                ?>
-            </table>
+                    if ($_REQUEST['nume'] == "1") {
+                        $_REQUEST['nume'] == "0";
+                    } elseif ($pagina > 1) {
+                        $anterior = $_REQUEST['nume'] - 1;
+                        // echo '<a class="page-link" aria-label="Anterior" href="crud_admin_cliente.php?nume=1"><span aria-hidden="true">&laquo;</span><span class="sr_only">Anterior</span></a>';
+                        echo '<li class="page-item"><a class="page-link" href="crud_admin_cliente.php?nume=' . ($pagina - 1) . '">' . $anterior . '</a></li>';
+                    }
+                    echo '<li class="page-item active"><a class="page-link">' . $_REQUEST['nume'] . '</a></li>';
+                    $siguiente = $_REQUEST['nume'] + 1;
+                    $ultima = $num_registros_query / $num_registros;
+                    if ($ultima == $_REQUEST['nume'] + 1)
+                        $ultima == "";
+                    if ($pagina < $paginas && $paginas > 1)
+                        echo '<li class="page-item"><a class="page-link" href="crud_admin_cliente.php?nume=' . ($pagina + 1) . '">' . $siguiente . '</a></li>';
+                    // echo '<li class="page-item"><a class="page-link" aria-label="Siguiente" href="crud_admin_cliente.php?nume=' . ceil($ultima) . '"><span aria-hidden="true">&raquo;</span><span class="sr_only">Siguiente</span></a></li>';
+                    ?>
+                </li>
+            </ul>
         </div>
         <div class="row">
             <a class="btn btn-primary" href="nuevocliente.php">Agregar cliente</a>
