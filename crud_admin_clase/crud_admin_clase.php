@@ -160,7 +160,7 @@ if (!$_SESSION['ingreso']) {
                 $anio = date('Y', $timestamp);
 
                 // realizo la consulta y la imprimo en la tabla
-                $select = "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividad, a.nombre, c.cupos, c.comentarios FROM clases c, actividades a WHERE c.fk_actividad = a.id AND MONTH(c.fecha) = $mes AND YEAR(c.fecha) = $anio ORDER BY c.fecha DESC;";
+                $select = "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividades, a.nombre, c.cupos, c.comentarios FROM clases c, actividades a WHERE c.fk_actividades = a.id AND MONTH(c.fecha) = $mes AND YEAR(c.fecha) = $anio ORDER BY c.fecha DESC;";
                 $query = mysqli_query($conexion, $select);
                 while ($resultado = mysqli_fetch_array($query)) {
                     ?>
