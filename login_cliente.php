@@ -17,9 +17,11 @@ if (isset($_POST['ingresar'])) {
         session_start(); // vuelve a abrir para registrar la unica y nueva sesion
         $_SESSION['ingresoCliente'] = true;
         $_SESSION['idIngresoCliente'] = $fila['id'];
-        header('Location: crud_cliente/abm_cliente.php');
-    } else {
-        header('Location: index.html');
+        $_SESSION['usuario'] = $usuario; // Guarda el nombre de usuario en la sesión
+            echo '<script>alert("Bienvenido ' . $usuario . '!"); window.location.href = "crud_cliente/abm_cliente.php";</script>';
+    } 
+    else {
+    echo '<script>alert("Credenciales incorrectas."); window.location.href = "login_cliente.php";</script>';
     }
 }
 ?>
@@ -142,23 +144,23 @@ if (isset($_POST['ingresar'])) {
                             ?>
                         </div>
                         <div class="card-body text-white" style="background-color: #000;">
-                            <form action="" method="post">
+                            <form action="" method="post" onsubmit="return ValidarLogin()">
                                 <div class="my-3">
                                     <label class="form-label">Usuario (mail):</label>
                                     <input <?php if (isset($_SESSION['ingresoCliente']))
                                         echo "disabled" ?>
-                                            class="form-control" type="text" name="usuario">
+                                            class="form-control" type="text" name="usuario" id="usuario">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Contraseña:</label>
                                         <input <?php if (isset($_SESSION['ingresoCliente']))
                                         echo "disabled" ?>
-                                            class="form-control" type="password" name="clave">
+                                            class="form-control" type="password" name="clave" id="clave">
                                     </div>
                                     <div class="my-3 d-flex flex-column align-items-center justify-content-center">
                                         <input <?php if (isset($_SESSION['ingresoCliente']))
                                         echo 'style="visibility:hidden"' ?> class="btn btn-primary" type="submit" name="ingresar" value="Ingresar">
-                                        <a class="btn btn-outline-primary my-2" href="cerrar_sesion.php">Cerrar sesión</a>
+                                        <a class="btn btn-outline-primary my-2" href="cerrar_sesion.php" onclick="return confirmarCerrarSesion()">Cerrar sesión</a>
                                     </div>
                                 </form>
                             </div>
@@ -183,10 +185,30 @@ if (isset($_POST['ingresar'])) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
-    </body>
 
-    </html>
+    <script>
+        function ValidarLogin() {
+            var usuario = document.getElementById("usuario").value;
+            var clave = document.getElementById("clave").value;
 
-    <?php
-                                    mysqli_close($conexion);
-                                    ?>
+            if (usuario === "" || clave === "") {
+                alert("Por favor, complete ambos campos.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+    <script>
+        function confirmarCerrarSesion() {
+            return confirm("¿Está seguro de que desea cerrar sesión?");
+        }
+    </script>
+
+</body>
+
+
+</html>
+
+    <?php mysqli_close($conexion);  ?>

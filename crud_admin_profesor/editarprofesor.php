@@ -125,7 +125,7 @@ if (!$_SESSION['ingreso']) {
 
     <div class="container mb-5">
         <div class="row">
-            <form action="sp_editarprofesor.php" method="POST">
+            <form action="sp_editarprofesor.php" method="POST" onsubmit="return validarFormulario()"> <!-- onsubmit Utiliza el script en caso de que haya errores -->
                 <div class="col-6 mx-auto">
                     <div class="mb-3">
                         <label class="form-label" style="visibility:hidden">Id:</label>
@@ -134,19 +134,19 @@ if (!$_SESSION['ingreso']) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nombre:</label>
-                        <input class="form-control" type="text" name="nombre" value="<?= $nombre ?>" id="">
+                        <input class="form-control" type="text" name="nombre" value="<?= $nombre ?>" id="nombre">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Apellido:</label>
-                        <input class="form-control" type="text" name="apellido" value="<?= $apellido ?>" id="">
+                        <input class="form-control" type="text" name="apellido" value="<?= $apellido ?>" id="apellido">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">DNI:</label>
-                        <input class="form-control" type="text" name="dni" value="<?= $dni ?>" id="">
+                        <input class="form-control" type="text" name="dni" value="<?= $dni ?>" id="dni">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Teléfono:</label>
-                        <input class="form-control" type="text" name="telefono" value="<?= $telefono ?>" id="">
+                        <input class="form-control" type="text" name="telefono" value="<?= $telefono ?>" id="telefono">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Sexo:</label>
@@ -163,11 +163,11 @@ if (!$_SESSION['ingreso']) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mail:</label>
-                        <input class="form-control" type="text" name="mail" value="<?= $mail ?>" id="">
+                        <input class="form-control" type="email" name="mail" value="<?= $mail ?>" id="mail">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Contraseña:</label>
-                        <input class="form-control" type="text" name="contrasena" value="<?= $contrasena ?>" id="">
+                        <input class="form-control" type="password" name="contrasena" value="<?= $contrasena ?>" id="contrasena">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Actividad:</label>
@@ -208,6 +208,45 @@ if (!$_SESSION['ingreso']) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+    <script>
+        function validarFormulario() {
+            let nombre = document.getElementById('nombre').value;
+            let apellido = document.getElementById('apellido').value;
+            let dni = document.getElementById('dni').value;
+            let telefono = document.getElementById('telefono').value;
+            let mail = document.getElementById('mail').value;
+            let contrasena = document.getElementById('contrasena').value;
+
+            if (nombre == "" || apellido == "") {
+                alert("Nombre y Apellido deben estar completos");
+                return false;
+            }
+
+            if (!/^\d+$/.test(dni)) {
+                alert("El DNI debe contener solo números.");
+                return false;
+            }
+
+            if (!/^\d+$/.test(telefono)) {
+                alert("El teléfono debe contener solo números.");
+                return false;
+            }
+
+            let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (!mail.match(mailformat)) {
+                alert("Debes ingresar un correo electrónico válido.");
+                return false;
+            }
+
+            if (contrasena.length < 6) {
+                alert("La contraseña debe tener al menos 6 caracteres.");
+                return false;
+            }
+
+            return true;
+        }
+    </script> 
 
 </body>
 

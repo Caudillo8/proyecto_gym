@@ -148,7 +148,7 @@ if (!$_SESSION['ingreso']) {
                 <div class="col-6 mx-auto my-5">
                     <h5>AGREGAR ACTIVIDAD</h5>
                     <label class="form-label">Ingrese el nombre:</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <input class="form-control" type="text" name="nombre" id="" required>
                     <input class="btn btn-primary my-1" type="submit" value="Agregar actividad">
                 </div>
             </form>

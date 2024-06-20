@@ -155,7 +155,7 @@ $nombre = $_GET['nombre'];
                 <div class="col-6 mx-auto my-5">
                     <h5>MODIFICAR ACTIVIDAD</h5>
                     <label class="form-label">Ingrese el nuevo nombre:</label>
-                    <input class="form-control" type="text" name="nombre" value="<?php echo $nombre; ?>">
+                    <input class="form-control" type="text" name="nombre" required value="<?php echo $nombre; ?>">
                     <input class="btn btn-primary my-1" type="submit" value="Modificar actividad">
                 </div>
                 <input type="text" name="id" value="<?php echo $id; ?>" style="visibility: hidden;">

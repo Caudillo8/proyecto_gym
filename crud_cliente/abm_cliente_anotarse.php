@@ -26,7 +26,7 @@ $repetido = mysqli_fetch_assoc($result);
 /*if($cuenta['alumnosAnotados'] >= 0) {
     // si no hay mas cupos para la clase, no lo anoto
     echo ("No hay mas cupos para esta clase.");*/
-if($cantidadCupos = 0){
+if($cantidadCupos == 0){
     echo ("No hay mas cupos para esta clase.");
 } elseif($repetido != false) {
     // si ya se anotó a la clase, no lo anoto
@@ -34,7 +34,7 @@ if($cantidadCupos = 0){
     
 } else {
     // si está todo bien, lo anoto
-    $insert = "INSERT INTO reservas VALUES($idIngresoCliente, $idAnotacionAClase)";
+    $insert = "INSERT INTO reservas (fk_cliente, fk_clase) VALUES($idIngresoCliente, $idAnotacionAClase)";
     $query = mysqli_query($conexion, $insert);
     // ACTUALIZAR CUPO DE LA CLASE
     $_query= "UPDATE clases SET cupos = (cupos - 1) where id = $idAnotacionAClase;";

@@ -123,7 +123,7 @@ if (!$_SESSION['ingreso']) {
 
     <div class="container mb-5">
         <div class="row">
-            <form action="sp_editarclase.php" method="POST">
+            <form action="sp_editarclase.php" method="POST"  onsubmit="return validarClase()">
                 <div class="col-6 mx-auto">
                     <div class="mb-3">
                         <label class="form-label" style="visibility:hidden">Id:</label>
@@ -132,15 +132,15 @@ if (!$_SESSION['ingreso']) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Fecha:</label>
-                        <input class="form-control" type="date" name="fecha" value="<?= $fecha ?>" id="">
+                        <input class="form-control" type="date" name="fecha" value="<?= $fecha ?>" id="fecha">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Horario de inicio:</label>
-                        <input class="form-control" type="time" name="inicio" value="<?= $inicio ?>" id="">
+                        <input class="form-control" type="time" name="inicio" value="<?= $inicio ?>" id="inicio">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Horario de final:</label>
-                        <input class="form-control" type="time" name="fin" value="<?= $fin ?>" id="">
+                        <input class="form-control" type="time" name="fin" value="<?= $fin ?>" id="fin">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Actividad:</label>
@@ -158,7 +158,7 @@ if (!$_SESSION['ingreso']) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Cantidad de cupos:</label>
-                        <input class="form-control" type="text" name="cupos" value="<?= $cupos ?>" id="">
+                        <input class="form-control" type="text" name="cupos" value="<?= $cupos ?>" id="cupos">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Comentario:</label>
@@ -190,6 +190,46 @@ if (!$_SESSION['ingreso']) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+    <script>
+        function validarClase() {
+            // Obtener valores de los campos
+            var fecha = document.getElementById("fecha").value;
+            var inicio = document.getElementById("inicio").value;
+            var fin = document.getElementById("fin").value;
+            var cupos = document.getElementById("cupos").value;
+
+            // Validar fecha posterior a la actual
+            var fechaSeleccionada = new Date(fecha);
+            var fechaActual = new Date();
+            if (fechaSeleccionada <= fechaActual) {
+                alert("La fecha debe ser posterior a la fecha actual.");
+                return false;
+            }
+
+            // Validar hora obligatoria
+           if (inicio === "" || fin === "") {
+            alert("Debe ingresar la hora de inicio y la hora de final.");
+            return false;
+            }
+
+
+            // Validar hora de final posterior a la hora de inicio
+            if (parseFloat(fin) <= parseFloat(inicio)) {
+                alert("La hora de final debe ser posterior a la hora de inicio.");
+                return false;
+            }
+
+            // Validar cantidad de cupos numérica y obligatoria
+            if (isNaN(cupos) || cupos === "") {
+                alert("La cantidad de cupos debe ser un número.");
+                return false;
+            }
+
+            // Si todas las validaciones pasan, retorna true y el formulario se envía
+            return true;
+        }
+    </script>
 
 </body>
 
