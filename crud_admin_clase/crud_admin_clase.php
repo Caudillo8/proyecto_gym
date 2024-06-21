@@ -26,8 +26,12 @@ if (!$_SESSION['ingreso']) {
     if (isset($_POST['mesAnio'])) {
         $mesAnio = $_POST['mesAnio'];
         $_SESSION['mesAnio'] = $mesAnio;
-    } else
+    } elseif (isset($_SESSION['mesAnio']))
         $mesAnio = $_SESSION['mesAnio'];
+    else {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $mesAnio = date('Y-m');
+    }
     ?>
 
     <header>
