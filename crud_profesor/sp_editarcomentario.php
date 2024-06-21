@@ -14,7 +14,7 @@ $update = "UPDATE clases SET comentarios = '$comentarios' WHERE id = $idClase;";
 $query = mysqli_query($conexion, $update);
 
 if (!$query) {
-    echo ("No se pudo modificar el comentario.");
+    echo '<script>alert("No se pudo modificar el comentario."); window.location.href = "abm_profesor.php";</script>';
 } else {
-    header("Location: abm_profesor.php");
+    echo '<script>alert("Se modificó el comentario correctamente."); window.location.href = "abm_profesor.php";</script>';
 }

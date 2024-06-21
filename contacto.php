@@ -136,18 +136,17 @@ if (!$conexion) {
                                 <label for="correo" class="form-label" style="color: white;">Correo electrónico</label>
                                 <input type="email" name="correo" class="form-control" required>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-5">
                                 <label for="telefono" class="form-label" style="color: white;">Teléfono</label>
                                 <input type="text" name="telefono" class="form-control" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="fecha" class="form-label" style="color: white;">Fecha</label>
-                                <input type="text" name="fecha" class="form-control"
-                                    value="<?php echo date('Y-m-d'); ?>" readonly>
-                            </div>
                             <div class="d-grid gap-2">
-                                <button type="submit" name="registro" class="btn btn-secondary">Enviar</button>
-                                <button type="reset" class="btn btn-secondary">Limpiar</button>
+                                <button type="submit" name="registro" class="btn btn-primary">Enviar</button>
+                                <button type="reset" class="btn btn-outline-primary">Limpiar</button>
+                            </div>
+                            <div>
+                                <input type="text" name="fecha" class="form-control" style="visibility: hidden;"
+                                    value="<?php echo date('Y-m-d'); ?>" readonly>
                             </div>
                         </form>
 

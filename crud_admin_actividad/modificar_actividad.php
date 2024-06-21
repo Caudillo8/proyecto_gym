@@ -116,8 +116,10 @@ $nombre = $_GET['nombre'];
     </header>
 
     <div class="container my-5" style="min-height: 600px;">
-        <div class="row my-4 mx-auto">
-            <a class="btn btn-primary" href="crud_admin_actividad.php">Agregar nueva actividad</a>
+        <div class="row my-4">
+            <div class="col-md-6 mx-auto">
+                <a class="btn btn-primary" href="crud_admin_actividad.php">Agregar nueva actividad</a>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6 mx-auto">

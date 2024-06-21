@@ -27,11 +27,10 @@ $repetido = mysqli_fetch_assoc($result);
     // si no hay mas cupos para la clase, no lo anoto
     echo ("No hay mas cupos para esta clase.");*/
 if($cantidadCupos == 0){
-    echo ("No hay mas cupos para esta clase.");
+    echo '<script>alert("No hay mas cupos para esta clase."); window.location.href = "abm_cliente.php";</script>';
 } elseif($repetido != false) {
     // si ya se anotó a la clase, no lo anoto
-    echo ("Ya está anotado en esta clase.");
-    
+    echo '<script>alert("Ya está anotado en esta clase."); window.location.href = "abm_cliente.php";</script>';
 } else {
     // si está todo bien, lo anoto
     $insert = "INSERT INTO reservas (fk_cliente, fk_clase) VALUES($idIngresoCliente, $idAnotacionAClase)";
@@ -42,10 +41,10 @@ if($cantidadCupos == 0){
 
 
     if(!$query) {
-        echo ("No se pudo anotar.");
+        echo '<script>alert("No se pudo anotar."); window.location.href = "abm_cliente.php";</script>';
     }
     else {
-        header("Location: abm_cliente.php");
+        echo '<script>alert("Te anotaste a la clase correctamente."); window.location.href = "abm_cliente.php";</script>';
     }
 
 }
