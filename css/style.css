@@ -1,170 +1,118 @@
 /* Estilos generales */
 body {
-    background-color: #000;
-  }
-  
-  .navbar {
-    background-color: #000;
-  }
-  
-  .nav-link {
-    color: white;
-  }
+  background-color: #000;
+}
 
-/* Inicio Agenda celeste del index */
+.navbar {
+  background-color: #000;
+}
+
+.nav-link {
+  color: white;
+}
+
+/* Agenda celeste del index */
 
 .agenda-card {
-
-    /* Estilos para la tarjeta de Agenda */
-
-    background-color: #f0f0f0;
-    padding: 10px 20px; /* Relleno interior con más espacio vertical */
-    border: 1px solid #ccc; /* Borde */
-    border-radius: 8px; /* Esquinas redondeadas */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+  /* Estilos para la tarjeta de Agenda */
+  background-color: #f0f0f0; /* Color de fondo */
+  padding: 10px 20px; /* Relleno interior con más espacio vertical */
+  border: 1px solid #ccc; /* Borde */
+  border-radius: 8px; /* Radio de borde para esquinas redondeadas */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
 }
 
 .agenda-card .card-title {
-
-    /* Estilos para el título de la tarjeta de Agenda */
-
-    font-size: 1.25rem; /* Tamaño de fuente */
-    margin-bottom: 8px; /* Margen inferior */
-    margin-top: 0; /* Elimina el margen superior para alinear con el borde superior */
+  /* Estilos para el título de la tarjeta de Agenda */
+  font-size: 1.25rem; /* Tamaño de fuente */
+  margin-bottom: 8px; /* Margen inferior */
+  margin-top: 0; /* Elimina el margen superior para alinear con el borde superior */
 }
 
 .agenda-card .btn-primary {
-
-    /* Estilos para el botón de la tarjeta de Agenda */
-
-    background-color: #007bff;
-    color: #fff; /* Color del texto */
-    padding: 10px 20px; /* Relleno interior */
-    border: none; /* Sin borde */
-    border-radius: 4px;
-    text-decoration: none;
+  /* Estilos para el botón de la tarjeta de Agenda */
+  background-color: #007bff; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  padding: 10px 20px; /* Relleno interior */
+  border: none; /* Sin borde */
+  border-radius: 4px;
+  text-decoration: none;
 }
 
 .agenda-card .btn-primary:hover {
-
-    /* Estilos para el botón de la tarjeta de Agenda al pasar el mouse */
-
-    background-color: #0056b3;
+  /* Estilos para el botón de la tarjeta de Agenda al pasar el mouse */
+  background-color: #0056b3; /* Color de fondo */
 }
 
 .agenda-celeste .btn-primary {
-    display: block;
-    margin: 0 auto;
-  }
-  
-  .agenda-celeste .card-title {
-    text-align: center;
-  }
+  display: block;
+  margin: 0 auto;
+}
 
-/* Fin Agenda Celeste Index */
+.agenda-celeste .card-title {
+  text-align: center;
+}
+
+/* Estilo para el contenedor principal */
 
 .main-container {
-  display: flex;
-  justify-content: space-between;
+display: flex;
+justify-content: space-between; /* Ajusta el espacio entre las secciones */
 }
 
 section {
-  margin-top: -100px;
-  margin-left: -500px;
+margin-top: -100px;
+margin-left: -500px;
 }
-
-/*Foto chicos adolescentes entrenando */
-
-.nueva-clase {
-  max-width: 30%;
-  height: auto;
-  border: 1px solid #ffffff; /* Borde negro sólido de 4px */
-  border-radius: 15px; /* Borde redondeado de 15px */
-}
-
-.segundafoto-class {
-  margin-left: 540px;
-  margin-top: -335px; /* Ajustar el margen superior para mover la imagen hacia abajo */
-}
-
-/*Fin Foto chicos adolescentes entrenando */
 
 /* Es el gif del hombre corriendo */
 
 .mi-imagen {
-    float: right;
-    margin-top: 80px; /* Margen superior */
-    margin-left: 0px; /* Margen derecho */
-    width: 100px; /* Ancho del GIF */
-    height: auto;
-}
-
-/* Fin gif del hombre corriendo */
-
-/* Estilo para el footer */
-
-footer .bg-black {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #000;
-  color: #fff;
-  padding: 20px;
-}
-
-/* Estilo para el contenido de texto */
-
-footer .text-content {
-  flex: 1;
-}
-
-/* Estilo para la imagen */
-
-.small-image {
-  max-width: 500px;
-  height: auto;
-  margin-left: 1000px; /* Espacio entre el texto y la imagen */
-  margin-top: -540px;
-}
-
+  float: right;
+  margin-top: 80px; /* Margen superior */
+  margin-left: 0px; /* Margen derecho */
+  width: 100px; /* Ancho del GIF */
+  height: auto; /* Altura automática para mantener la proporción */
+}       
 
 @media (max-width: 480px) {
 
 
-    .gif-responsive {
-        display: none; /* Ocultar el GIF en el responsive */
-    }
-
-    .agenda-celeste {
-        background-color: #164773;
-        color: #fff; /* Color del texto */
-        padding: 10px 20px; /* Relleno interior */
-        border: none; /* Sin borde */
-        border-radius: 4px;
-        text-decoration: none;
-    }
-
-    .celeste{
-        margin-top: -5%;
-        display: flex;
-    }
-
-    section {
-      margin-top: 0px;
-      margin-left: 0px;
-    }
-
-    .custom-class {
-      
-      display: none;
+  .gif-responsive {
+      display: none; /* Ocultar el GIF en pantallas más pequeñas */
   }
 
-  .adolescentes
+  .agenda-celeste {
+      background-color: #164773;
+      color: #fff; /* Color del texto */
+      padding: 10px 20px; /* Relleno interior */
+      border: none; /* Sin borde */
+      border-radius: 4px;
+      text-decoration: none;
+  }
 
-  {
+  .celeste{
+      margin-top: -5%;
+      display: flex;
+  }
 
-    display: none;
+  .agenda-negra .card {
+      margin: 0 auto; /* Centra la tarjeta horizontalmente */
+      max-width: 100%; /* Asegura que la tarjeta no sea más ancha que la pantalla */
+  }
 
+  .card-body img.mi-imagen {
+      display: block;
+      margin: 0 auto; /* Centra la imagen horizontalmente */
+  }
+
+  section {
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+
+  .card-body img.mi-imagen.gif-responsive {
+      display: none; /* Ocultar el gif en el celular */
   }
 
 }

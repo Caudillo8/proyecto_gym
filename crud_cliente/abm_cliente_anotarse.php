@@ -26,15 +26,14 @@ $repetido = mysqli_fetch_assoc($result);
 /*if($cuenta['alumnosAnotados'] >= 0) {
     // si no hay mas cupos para la clase, no lo anoto
     echo ("No hay mas cupos para esta clase.");*/
-if($cantidadCupos = 0){
-    echo ("No hay mas cupos para esta clase.");
+if($cantidadCupos == 0){
+    echo '<script>alert("No hay mas cupos para esta clase."); window.location.href = "abm_cliente.php";</script>';
 } elseif($repetido != false) {
     // si ya se anotó a la clase, no lo anoto
-    echo ("Ya está anotado en esta clase.");
-    
+    echo '<script>alert("Ya está anotado en esta clase."); window.location.href = "abm_cliente.php";</script>';
 } else {
     // si está todo bien, lo anoto
-    $insert = "INSERT INTO reservas VALUES($idIngresoCliente, $idAnotacionAClase)";
+    $insert = "INSERT INTO reservas (fk_cliente, fk_clase) VALUES($idIngresoCliente, $idAnotacionAClase)";
     $query = mysqli_query($conexion, $insert);
     // ACTUALIZAR CUPO DE LA CLASE
     $_query= "UPDATE clases SET cupos = (cupos - 1) where id = $idAnotacionAClase;";
@@ -42,10 +41,10 @@ if($cantidadCupos = 0){
 
 
     if(!$query) {
-        echo ("No se pudo anotar.");
+        echo '<script>alert("No se pudo anotar."); window.location.href = "abm_cliente.php";</script>';
     }
     else {
-        header("Location: abm_cliente.php");
+        echo '<script>alert("Te anotaste a la clase correctamente."); window.location.href = "abm_cliente.php";</script>';
     }
 
 }

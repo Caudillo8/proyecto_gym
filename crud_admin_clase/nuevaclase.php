@@ -26,13 +26,8 @@ if (!$_SESSION['ingreso']) {
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="../index.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-person-arms-up" viewBox="0 0 16 16">
-                        <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                        <path
-                            d="m5.93 6.704-.846 8.451a.768.768 0 0 0 1.523.203l.81-4.865a.59.59 0 0 1 1.165 0l.81 4.865a.768.768 0 0 0 1.523-.203l-.845-8.451A1.5 1.5 0 0 1 10.5 5.5L13 2.284a.796.796 0 0 0-1.239-.998L9.634 3.84a.7.7 0 0 1-.33.235c-.23.074-.665.176-1.304.176-.64 0-1.074-.102-1.305-.176a.7.7 0 0 1-.329-.235L4.239 1.286a.796.796 0 0 0-1.24.998l2.5 3.216c.317.316.475.758.43 1.204Z" />
-                    </svg>
-                    NombreSistema
+                    <img src="../images/logo.png" alt="Fit Fusion" style="width: 50px;">
+                    Fit Fusion
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -118,7 +113,7 @@ if (!$_SESSION['ingreso']) {
 
     <div class="container mb-5">
         <div class="row">
-            <form action="sp_insertarclase.php" method="POST">
+            <form action="sp_insertarclase.php" method="POST" onsubmit="return validarClase()">
                 <div class="col-6 mx-auto">
                     <div class="mb-3">
                         <label class="form-label" style="visibility:hidden">Id:</label>
@@ -126,15 +121,15 @@ if (!$_SESSION['ingreso']) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Fecha:</label>
-                        <input class="form-control" type="date" name="fecha" id="">
+                        <input class="form-control" type="date" name="fecha" id="fecha">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Horario de inicio:</label>
-                        <input class="form-control" type="time" name="inicio" id="">
+                        <input class="form-control" type="time" name="inicio" id="inicio">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Horario de final:</label>
-                        <input class="form-control" type="time" name="fin" id="">
+                        <input class="form-control" type="time" name="fin" id="fin">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Actividad:</label>
@@ -151,15 +146,16 @@ if (!$_SESSION['ingreso']) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Cantidad de cupos:</label>
-                        <input class="form-control" type="text" name="cupos" id="">
+                        <input class="form-control" type="text" name="cupos" id="cupos" requerid>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Comentario:</label>
-                        <input class="form-control" type="textarea" name="comentarios" id="">
+                        <textarea class="form-control" name="comentarios" style="resize: none;" maxlength="50"
+                            rows="10"></textarea>
                     </div>
                     <div class="mb-3">
-                        <input class="btn btn-primary" type="submit" value="Agregar">
-                        <a class="btn btn-outline-primary" href="crud_admin_clase.php">Cancelar</a>
+                        <input class="btn btn-primary my-1" type="submit" value="Agregar">
+                        <a class="btn btn-outline-primary my-1" href="crud_admin_clase.php">Cancelar</a>
                     </div>
                 </div>
             </form>
@@ -182,6 +178,47 @@ if (!$_SESSION['ingreso']) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+    <script>
+        function validarClase() {
+            // Obtener valores de los campos
+            var fecha = document.getElementById("fecha").value;
+            var inicio = document.getElementById("inicio").value;
+            var fin = document.getElementById("fin").value;
+            var cupos = document.getElementById("cupos").value;
+
+            // Validar fecha posterior a la actual
+            var fechaSeleccionada = new Date(fecha);
+            var fechaActual = new Date();
+            if (fechaSeleccionada <= fechaActual) {
+                alert("La fecha debe ser posterior a la fecha actual.");
+                return false;
+            }
+
+            // Validar hora obligatoria
+           if (inicio === "" || fin === "") {
+            alert("Debe ingresar la hora de inicio y la hora de final.");
+            return false;
+            }
+
+
+            // Validar hora de final posterior a la hora de inicio
+            if (parseFloat(fin) <= parseFloat(inicio)) {
+                alert("La hora de final debe ser posterior a la hora de inicio.");
+                return false;
+            }
+
+            // Validar cantidad de cupos numérica y obligatoria
+            if (isNaN(cupos) || cupos === "") {
+                alert("La cantidad de cupos debe ser un número.");
+                return false;
+            }
+
+            // Si todas las validaciones pasan, retorna true y el formulario se envía
+            return true;
+        }
+    </script>
+
 
 </body>
 

@@ -26,13 +26,8 @@ if (!$_SESSION['ingreso']) {
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="../index.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-person-arms-up" viewBox="0 0 16 16">
-                        <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                        <path
-                            d="m5.93 6.704-.846 8.451a.768.768 0 0 0 1.523.203l.81-4.865a.59.59 0 0 1 1.165 0l.81 4.865a.768.768 0 0 0 1.523-.203l-.845-8.451A1.5 1.5 0 0 1 10.5 5.5L13 2.284a.796.796 0 0 0-1.239-.998L9.634 3.84a.7.7 0 0 1-.33.235c-.23.074-.665.176-1.304.176-.64 0-1.074-.102-1.305-.176a.7.7 0 0 1-.329-.235L4.239 1.286a.796.796 0 0 0-1.24.998l2.5 3.216c.317.316.475.758.43 1.204Z" />
-                    </svg>
-                    NombreSistema
+                    <img src="../images/logo.png" alt="Fit Fusion" style="width: 50px;">
+                    Fit Fusion
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -118,27 +113,28 @@ if (!$_SESSION['ingreso']) {
 
     <div class="container mb-5">
         <div class="row">
-            <form action="sp_insertarprofesor.php" method="POST">
+            <form action="sp_insertarprofesor.php" method="POST" onsubmit="return validarFormulario()"> <!-- onsubmit Utiliza el script en caso de que haya errores -->
                 <div class="col-6 mx-auto">
                     <div class="mb-3">
                         <label class="form-label" style="visibility:hidden">Id:</label>
-                        <input class="form-control" type="text" name="id" value="<?= $id ?>" id="" style="visibility:hidden">
+                        <input class="form-control" type="text" name="id" value="<?= $id ?>" id=""
+                            style="visibility:hidden">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nombre:</label>
-                        <input class="form-control" type="text" name="nombre" id="">
+                        <input class="form-control" type="text" name="nombre" id="nombre">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Apellido:</label>
-                        <input class="form-control" type="text" name="apellido" id="">
+                        <input class="form-control" type="text" name="apellido" id="apellido">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">DNI:</label>
-                        <input class="form-control" type="text" name="dni" id="">
+                        <input class="form-control" type="text" name="dni" id="dni">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Teléfono:</label>
-                        <input class="form-control" type="text" name="telefono" id="">
+                        <input class="form-control" type="text" name="telefono" id="telefono">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Sexo:</label>
@@ -150,28 +146,28 @@ if (!$_SESSION['ingreso']) {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Mail:</label>
-                        <input class="form-control" type="text" name="mail" id="">
+                        <input class="form-control" type="email" name="mail" id="mail">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Contraseña:</label>
-                        <input class="form-control" type="text" name="contrasena" id="">
+                        <input class="form-control" type="password" name="contrasena" id="contrasena">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Actividad:</label>
                         <select class="form-select" name="fk_actividades">
                             <?php
                             $query = mysqli_query($conexion, "SELECT * FROM actividades;");
-                            while($datos = mysqli_fetch_array($query)) {
-                            ?>
+                            while ($datos = mysqli_fetch_array($query)) {
+                                ?>
                                 <option value="<?php echo $datos[0] ?>"><?php echo $datos[1] ?></option>
-                            <?php
+                                <?php
                             }
                             ?>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <input class="btn btn-primary" type="submit" value="Agregar">
-                        <a class="btn btn-outline-primary" href="crud_admin_profesor.php">Cancelar</a>
+                        <input class="btn btn-primary my-1" type="submit" value="Agregar">
+                        <a class="btn btn-outline-primary my-1" href="crud_admin_profesor.php">Cancelar</a>
                     </div>
                 </div>
             </form>
@@ -194,6 +190,45 @@ if (!$_SESSION['ingreso']) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+    <script>
+        function validarFormulario() {
+            let nombre = document.getElementById('nombre').value;
+            let apellido = document.getElementById('apellido').value;
+            let dni = document.getElementById('dni').value;
+            let telefono = document.getElementById('telefono').value;
+            let mail = document.getElementById('mail').value;
+            let contrasena = document.getElementById('contrasena').value;
+
+            if (nombre == "" || apellido == "") {
+                alert("Nombre y Apellido deben estar completos");
+                return false;
+            }
+
+            if (!/^\d+$/.test(dni)) {
+                alert("El DNI debe contener solo números.");
+                return false;
+            }
+
+            if (!/^\d+$/.test(telefono)) {
+                alert("El teléfono debe contener solo números.");
+                return false;
+            }
+
+            let mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (!mail.match(mailformat)) {
+                alert("Debes ingresar un correo electrónico válido.");
+                return false;
+            }
+
+            if (contrasena.length < 6) {
+                alert("La contraseña debe tener al menos 6 caracteres.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 
 </body>
 

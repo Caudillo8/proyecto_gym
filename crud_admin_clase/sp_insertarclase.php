@@ -15,7 +15,7 @@ $fk_actividad = $_POST['fk_actividad'];
 $cupos = $_POST['cupos'];
 $comentarios = $_POST['comentarios'];
 
-$insert = "INSERT INTO clases(fecha, inicio, fin, fk_actividad, cupos, comentarios) VALUES ('$fecha','$inicio','$fin', '$fk_actividad', '$cupos', '$comentarios');";
+$insert = "INSERT INTO clases(fecha, inicio, fin, fk_actividades, cupos, comentarios) VALUES ('$fecha','$inicio','$fin', '$fk_actividad', '$cupos', '$comentarios');";
 $query = mysqli_query($conexion, $insert);
 
 if(!$query) {

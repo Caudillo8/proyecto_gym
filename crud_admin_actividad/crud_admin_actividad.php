@@ -26,13 +26,8 @@ if (!$_SESSION['ingreso']) {
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="../index.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-person-arms-up" viewBox="0 0 16 16">
-                        <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                        <path
-                            d="m5.93 6.704-.846 8.451a.768.768 0 0 0 1.523.203l.81-4.865a.59.59 0 0 1 1.165 0l.81 4.865a.768.768 0 0 0 1.523-.203l-.845-8.451A1.5 1.5 0 0 1 10.5 5.5L13 2.284a.796.796 0 0 0-1.239-.998L9.634 3.84a.7.7 0 0 1-.33.235c-.23.074-.665.176-1.304.176-.64 0-1.074-.102-1.305-.176a.7.7 0 0 1-.329-.235L4.239 1.286a.796.796 0 0 0-1.24.998l2.5 3.216c.317.316.475.758.43 1.204Z" />
-                    </svg>
-                    NombreSistema
+                    <img src="../images/logo.png" alt="Fit Fusion" style="width: 50px;">
+                    Fit Fusion
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -118,30 +113,34 @@ if (!$_SESSION['ingreso']) {
 
     <div class="container my-5" style="min-height: 600px;">
         <div class="row">
-            <div class="col-6 mx-auto">
-                <table class="table table-responsive">
-                    <tr>
-                        <td scope="col">Id</td>
-                        <td scope="col">Nombre</td>
-                        <td scope="col">Opciones</td>
-                    </tr>
-                    <?php
-                    $select = "SELECT id, nombre FROM actividades ORDER BY id DESC;";
-                    $query = mysqli_query($conexion, $select);
-                    while ($resultado = mysqli_fetch_array($query)) {
-                        ?>
+            <div class="col-md-6 mx-auto">
+                <div class="table-responsive">
+                    <table class="table table-responsive">
                         <tr>
-                            <td scope="row"><?php echo $resultado['0'] ?></td>
-                            <td scope="row"><?php echo $resultado['1'] ?></td>
-                            <td scope="row">
-                                <a class="btn btn-danger my-1"
-                                    href="sp_eliminaractividad.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
-                            </td>
+                            <td scope="col">Id</td>
+                            <td scope="col">Nombre</td>
+                            <td scope="col">Opciones</td>
                         </tr>
                         <?php
-                    }
-                    ?>
-                </table>
+                        $select = "SELECT id, nombre FROM actividades ORDER BY id DESC;";
+                        $query = mysqli_query($conexion, $select);
+                        while ($resultado = mysqli_fetch_array($query)) {
+                            ?>
+                            <tr>
+                                <td scope="row"><?php echo $resultado['0'] ?></td>
+                                <td scope="row"><?php echo $resultado['1'] ?></td>
+                                <td scope="row">
+                                    <a class="btn btn-primary my-1"
+                                        href="modificar_actividad.php?id=<?php echo $resultado['0'] ?>&nombre=<?php echo $resultado['1'] ?>">Editar</a>
+                                    <a class="btn btn-danger my-1"
+                                        href="sp_eliminaractividad.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -149,7 +148,7 @@ if (!$_SESSION['ingreso']) {
                 <div class="col-6 mx-auto my-5">
                     <h5>AGREGAR ACTIVIDAD</h5>
                     <label class="form-label">Ingrese el nombre:</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <input class="form-control" type="text" name="nombre" id="" required>
                     <input class="btn btn-primary my-1" type="submit" value="Agregar actividad">
                 </div>
             </form>

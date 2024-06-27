@@ -2,7 +2,7 @@
 
 <?php
 
-include('conexion.php');
+include ('conexion.php');
 
 if (!$conexion) {
     die("Error en la conexión: " . mysqli_connect_error());
@@ -16,7 +16,7 @@ if (!$conexion) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Contacto</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
@@ -28,13 +28,8 @@ if (!$conexion) {
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="index.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-person-arms-up" viewBox="0 0 16 16">
-                        <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                        <path
-                            d="m5.93 6.704-.846 8.451a.768.768 0 0 0 1.523.203l.81-4.865a.59.59 0 0 1 1.165 0l.81 4.865a.768.768 0 0 0 1.523-.203l-.845-8.451A1.5 1.5 0 0 1 10.5 5.5L13 2.284a.796.796 0 0 0-1.239-.998L9.634 3.84a.7.7 0 0 1-.33.235c-.23.074-.665.176-1.304.176-.64 0-1.074-.102-1.305-.176a.7.7 0 0 1-.329-.235L4.239 1.286a.796.796 0 0 0-1.24.998l2.5 3.216c.317.316.475.758.43 1.204Z" />
-                    </svg>
-                    NombreSistema
+                    <img src="images/logo.png" alt="Fit Fusion" style="width: 50px;">
+                    Fit Fusion
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -141,18 +136,17 @@ if (!$conexion) {
                                 <label for="correo" class="form-label" style="color: white;">Correo electrónico</label>
                                 <input type="email" name="correo" class="form-control" required>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-5">
                                 <label for="telefono" class="form-label" style="color: white;">Teléfono</label>
                                 <input type="text" name="telefono" class="form-control" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="fecha" class="form-label" style="color: white;">Fecha</label>
-                                <input type="text" name="fecha" class="form-control"
-                                    value="<?php echo date('Y-m-d'); ?>" readonly>
-                            </div>
                             <div class="d-grid gap-2">
-                                <button type="submit" name="registro" class="btn btn-secondary">Enviar</button>
-                                <button type="reset" class="btn btn-secondary">Limpiar</button>
+                                <button type="submit" name="registro" class="btn btn-primary">Enviar</button>
+                                <button type="reset" class="btn btn-outline-primary">Limpiar</button>
+                            </div>
+                            <div>
+                                <input type="text" name="fecha" class="form-control" style="visibility: hidden;"
+                                    value="<?php echo date('Y-m-d'); ?>" readonly>
                             </div>
                         </form>
 
@@ -160,7 +154,8 @@ if (!$conexion) {
 
                     </div>
                 </div>
-                <div class="col-lg-4 d-flex justify-content-center align-items-center">
+                <!-- Esta columna se oculta en el responsive -->
+                <div class="col-lg-4 d-lg-flex justify-content-center align-items-center d-none">
                     <img src="images/imagen-boxeadora.jpg" alt="Imagen de contacto" class="img-fluid rounded float-end"
                         style="max-width: 600px; margin-right: -1500px; margin-top: -700px; border: 2px solid black;">
                 </div>

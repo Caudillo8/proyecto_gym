@@ -6,6 +6,10 @@ if (!$_SESSION['ingreso']) {
     header('Location:../login_admin.php');
     exit();
 }
+
+$id = $_GET['id'];
+$nombre = $_GET['nombre'];
+
 ?>
 
 <!DOCTYPE html>
@@ -17,18 +21,10 @@ if (!$_SESSION['ingreso']) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css" type="text">
-    <title>CRUD Admin - Profesor</title>
+    <title>CRUD Admin - Actividad</title>
 </head>
 
 <body>
-
-    <?php
-    if (isset($_POST['buscarprofesor'])) {
-        $buscar = $_POST['buscarprofesor'];
-        $_SESSION['buscarprofesor'] = $buscar;
-    } else
-        $buscar = $_SESSION['buscarprofesor'];
-    ?>
 
     <header>
         <nav class="navbar navbar-expand-lg bg-black">
@@ -120,109 +116,52 @@ if (!$_SESSION['ingreso']) {
     </header>
 
     <div class="container my-5" style="min-height: 600px;">
-        <div class="row">
-            <div class="col-sm-6">
-                <form method="POST" action="">
-                    <div class="my-3">
-                        <label class="form-label">Buscar profesor:</label>
-                        <input class="form-control" type="text" name="buscarprofesor" id="" value="<?= $buscar ?>">
-                        <input class="btn btn-primary my-1" type="submit" value="Buscar">
-                        <a class="btn btn-danger my-1" href="crud_admin_profesor.php">Reset</a>
-                    </div>
-                </form>
+        <div class="row my-4">
+            <div class="col-md-6 mx-auto">
+                <a class="btn btn-primary" href="crud_admin_actividad.php">Agregar nueva actividad</a>
             </div>
         </div>
         <div class="row">
-            <div class="table-responsive">
-                <table class="table">
-                    <tr>
-                        <td scope="col">Nombre</td>
-                        <td scope="col">Apellido</td>
-                        <td scope="col">DNI</td>
-                        <td scope="col">Telefono</td>
-                        <td scope="col">Mail</td>
-                        <td scope="col">Sexo</td>
-                        <td scope="col">Actividad</td>
-                        <td scope="col">Opciones</td>
-                    </tr>
-                    <?php
-                    // PAGINACION
-                    // reviso si esta vacio nume
-                    if (empty($_REQUEST['nume']) || $_REQUEST['nume'] == "") {
-                        $_REQUEST['nume'] = "1";
-                    }
-                    // realizo la consulta y traigo el numero de filas
-                    $select = "SELECT p.id, p.nombre, p.apellido, p.dni, p.telefono, p.mail, p.pass, p.sexo, p.fk_actividades, a.nombre FROM profesores p, actividades a WHERE p.fk_actividades = a.id AND ( p.apellido LIKE '%$buscar%' OR p.nombre LIKE '%$buscar%' ) ORDER BY id DESC;";
-                    $query = mysqli_query($conexion, $select);
-                    $num_registros_query = @mysqli_num_rows($query);
-                    // establezco cuantos registros muestro por pagina y traigo nume
-                    $num_registros = 5;
-                    $pagina = $_REQUEST['nume'];
-                    // chequeo si ya estaba pasando de pagina o si arranca de cero
-                    if (is_numeric($pagina)) {
-                        $inicio = ($pagina - 1) * $num_registros;
-                    } else {
-                        $inicio = 0;
-                    }
-                    $busqueda = mysqli_query($conexion, "SELECT p.id, p.nombre, p.apellido, p.dni, p.telefono, p.mail, p.pass, p.sexo, p.fk_actividades, a.nombre FROM profesores p, actividades a WHERE p.fk_actividades = a.id AND ( p.apellido LIKE '%$buscar%' OR p.nombre LIKE '%$buscar%' ) ORDER BY id DESC LIMIT $inicio, $num_registros;");
-                    $paginas = ceil($num_registros_query / $num_registros);
-                    while ($resultado = mysqli_fetch_array($busqueda)) {
-                        ?>
+            <div class="col-md-6 mx-auto">
+                <div class="table-responsive">
+                    <table class="table table-responsive">
                         <tr>
-                            <td scope="row"><?php echo $resultado['1'] ?></td>
-                            <td scope="row"><?php echo $resultado['2'] ?></td>
-                            <td scope="row"><?php echo $resultado['3'] ?></td>
-                            <td scope="row"><?php echo $resultado['4'] ?></td>
-                            <td scope="row"><?php echo $resultado['5'] ?></td>
-                            <td scope="row"><?php echo $resultado['7'] ?></td>
-                            <td scope="row"><?php echo $resultado['9'] ?></td>
-                            <td scope="row">
-                                <a class="btn btn-primary my-1" href="editarprofesor.php?
-                            id=<?php echo $resultado['0'] ?>&
-                            nombre=<?php echo $resultado['1'] ?>&
-                            apellido=<?php echo $resultado['2'] ?>&
-                            dni=<?php echo $resultado['3'] ?>&
-                            telefono=<?php echo $resultado['4'] ?>&
-                            mail=<?php echo $resultado['5'] ?>&
-                            contrasena=<?php echo $resultado['6'] ?>&
-                            sexo=<?php echo $resultado['7'] ?>&
-                            fk_actividades=<?php echo $resultado['8'] ?>">
-                                    Editar
-                                </a>
-                                <a class="btn btn-danger my-1"
-                                    href="sp_eliminarprofesor.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
-                            </td>
+                            <td scope="col">Id</td>
+                            <td scope="col">Nombre</td>
+                            <td scope="col">Opciones</td>
                         </tr>
                         <?php
-                    }
-                    ?>
-                </table>
+                        $select = "SELECT id, nombre FROM actividades ORDER BY id DESC;";
+                        $query = mysqli_query($conexion, $select);
+                        while ($resultado = mysqli_fetch_array($query)) {
+                            ?>
+                            <tr>
+                                <td scope="row"><?php echo $resultado['0'] ?></td>
+                                <td scope="row"><?php echo $resultado['1'] ?></td>
+                                <td scope="row">
+                                    <a class="btn btn-primary my-1"
+                                        href="modificar_actividad.php?id=<?php echo $resultado['0'] ?>&nombre=<?php echo $resultado['1'] ?>">Editar</a>
+                                    <a class="btn btn-danger my-1"
+                                        href="sp_eliminaractividad.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </table>
+                </div>
             </div>
-            <!-- PAGINACION -->
-            <ul class="pagination pg-dark justify-content-center py-5 mb-0" style="float: none;">
-                <li class="page-item">
-                    <?php
-                    if ($_REQUEST['nume'] == "1") {
-                        $_REQUEST['nume'] == "0";
-                    } elseif ($pagina > 1) {
-                        $anterior = $_REQUEST['nume'] - 1;
-                        // echo '<a class="page-link" aria-label="Anterior" href="buscarprofesor.php?nume=1"><span aria-hidden="true">&laquo;</span><span class="sr_only">Anterior</span></a>';
-                        echo '<li class="page-item"><a class="page-link" href="buscarprofesor.php?nume=' . ($pagina - 1) . '">' . $anterior . '</a></li>';
-                    }
-                    echo '<li class="page-item active"><a class="page-link">' . $_REQUEST['nume'] . '</a></li>';
-                    $siguiente = $_REQUEST['nume'] + 1;
-                    $ultima = $num_registros_query / $num_registros;
-                    if ($ultima == $_REQUEST['nume'] + 1)
-                        $ultima == "";
-                    if ($pagina < $paginas && $paginas > 1)
-                        echo '<li class="page-item"><a class="page-link" href="buscarprofesor.php?nume=' . ($pagina + 1) . '">' . $siguiente . '</a></li>';
-                    // echo '<li class="page-item"><a class="page-link" aria-label="Siguiente" href="buscarprofesor.php?nume=' . ceil($ultima) . '"><span aria-hidden="true">&raquo;</span><span class="sr_only">Siguiente</span></a></li>';
-                    ?>
-                </li>
-            </ul>
         </div>
         <div class="row">
-            <a class="btn btn-primary" href="nuevoprofesor.php">Agregar profesor</a>
+            <form action="sp_modificaractividad.php" method="POST">
+                <div class="col-6 mx-auto my-5">
+                    <h5>MODIFICAR ACTIVIDAD</h5>
+                    <label class="form-label">Ingrese el nuevo nombre:</label>
+                    <input class="form-control" type="text" name="nombre" required value="<?php echo $nombre; ?>">
+                    <input class="btn btn-primary my-1" type="submit" value="Modificar actividad">
+                </div>
+                <input type="text" name="id" value="<?php echo $id; ?>" style="visibility: hidden;">
+            </form>
         </div>
     </div>
 

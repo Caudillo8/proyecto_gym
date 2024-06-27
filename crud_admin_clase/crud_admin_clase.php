@@ -22,17 +22,24 @@ if (!$_SESSION['ingreso']) {
 
 <body>
 
+    <?php
+    if (isset($_POST['mesAnio'])) {
+        $mesAnio = $_POST['mesAnio'];
+        $_SESSION['mesAnio'] = $mesAnio;
+    } elseif (isset($_SESSION['mesAnio']))
+        $mesAnio = $_SESSION['mesAnio'];
+    else {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $mesAnio = date('Y-m');
+    }
+    ?>
+
     <header>
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="../index.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-person-arms-up" viewBox="0 0 16 16">
-                        <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                        <path
-                            d="m5.93 6.704-.846 8.451a.768.768 0 0 0 1.523.203l.81-4.865a.59.59 0 0 1 1.165 0l.81 4.865a.768.768 0 0 0 1.523-.203l-.845-8.451A1.5 1.5 0 0 1 10.5 5.5L13 2.284a.796.796 0 0 0-1.239-.998L9.634 3.84a.7.7 0 0 1-.33.235c-.23.074-.665.176-1.304.176-.64 0-1.074-.102-1.305-.176a.7.7 0 0 1-.329-.235L4.239 1.286a.796.796 0 0 0-1.24.998l2.5 3.216c.317.316.475.758.43 1.204Z" />
-                    </svg>
-                    NombreSistema
+                    <img src="../images/logo.png" alt="Fit Fusion" style="width: 50px;">
+                    Fit Fusion
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -121,11 +128,14 @@ if (!$_SESSION['ingreso']) {
             <div class="col-6 my-4">
                 <form method="POST">
                     <?php
-                    if (!isset($_POST['mesAnio'])) {
+                    if (!isset($_POST['mesAnio']) && !isset($_SESSION['mesAnio'])) {
                         date_default_timezone_set('America/Argentina/Buenos_Aires');
                         $mesAnio = date('Y-m');
                     } else {
-                        $mesAnio = $_POST['mesAnio'];
+                        if (!isset($_POST['mesAnio']))
+                            $mesAnio = $_SESSION['mesAnio'];
+                        if (!isset($_SESSION['mesAnio']))
+                            $mesAnio = $_POST['mesAnio'];
                     }
                     ?>
                     <label class="form-label">Buscar por mes:</label>
@@ -135,43 +145,64 @@ if (!$_SESSION['ingreso']) {
             </div>
         </div>
         <div class="row">
-            <table class="table table-responsive">
-                <tr>
-                    <td scope="col">Fecha</td>
-                    <td scope="col">Horario inicio</td>
-                    <td scope="col">Horario final</td>
-                    <td scope="col">Actividad</td>
-                    <td scope="col">Comentario</td>
-                    <td scope="col">Opciones</td>
-                </tr>
-                <?php
-                // establezco como default al mes actual, a menos que ya se haya seleccionado uno
-                if (!isset($_POST['mesAnio'])) {
-                    date_default_timezone_set('America/Argentina/Buenos_Aires');
-                    $mesAnio = date('Y-m');
-                }
-                else {
-                    $mesAnio = $_POST['mesAnio'];
-                }
-                
-                // extraigo el mes y anio para filtrar la consulta
-                $timestamp = strtotime($mesAnio);
-                $mes = date('m', $timestamp);
-                $anio = date('Y', $timestamp);
-
-                // realizo la consulta y la imprimo en la tabla
-                $select = "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividad, a.nombre, c.cupos, c.comentarios FROM clases c, actividades a WHERE c.fk_actividad = a.id AND MONTH(c.fecha) = $mes AND YEAR(c.fecha) = $anio ORDER BY c.fecha DESC;";
-                $query = mysqli_query($conexion, $select);
-                while ($resultado = mysqli_fetch_array($query)) {
-                    ?>
+            <div class="table-responsive">
+                <table class="table table-responsive">
                     <tr>
-                        <td scope="row"><?php echo $resultado['1'] ?></td>
-                        <td scope="row"><?php echo $resultado['2'] ?></td>
-                        <td scope="row"><?php echo $resultado['3'] ?></td>
-                        <td scope="row"><?php echo $resultado['5'] ?></td>
-                        <td scope="row"><?php echo $resultado['7'] ?></td>
-                        <td scope="row">
-                            <a class="btn btn-primary my-1" href="editarclase.php?
+                        <td scope="col">Fecha</td>
+                        <td scope="col">Horario inicio</td>
+                        <td scope="col">Horario final</td>
+                        <td scope="col">Actividad</td>
+                        <td scope="col">Comentario</td>
+                        <td scope="col">Opciones</td>
+                    </tr>
+                    <?php
+                    // establezco como default al mes actual, a menos que ya se haya seleccionado uno
+                    if (!isset($_POST['mesAnio']) && !isset($_SESSION['mesAnio'])) {
+                        date_default_timezone_set('America/Argentina/Buenos_Aires');
+                        $mesAnio = date('Y-m');
+                    } else {
+                        if (isset($_POST['mesAnio']))
+                            $mesAnio = $_POST['mesAnio'];
+                        if (isset($_SESSION['mesAnio']))
+                            $mesAnio = $_SESSION['mesAnio'];
+                    }
+
+                    // extraigo el mes y anio para filtrar la consulta
+                    $timestamp = strtotime($mesAnio);
+                    $mes = date('m', $timestamp);
+                    $anio = date('Y', $timestamp);
+
+                    // PAGINACION
+                    // reviso si esta vacio nume
+                    if (empty($_REQUEST['nume']) || $_REQUEST['nume'] == "") {
+                        $_REQUEST['nume'] = "1";
+                    }
+                    // realizo la consulta y traigo el numero de filas
+                    $select = "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividades, a.nombre, c.cupos, c.comentarios FROM clases c, actividades a WHERE c.fk_actividades = a.id AND MONTH(c.fecha) = $mes AND YEAR(c.fecha) = $anio ORDER BY c.fecha DESC;";
+                    $query = mysqli_query($conexion, $select);
+                    $num_registros_query = @mysqli_num_rows($query);
+                    // establezco cuantos registros muestro por pagina y traigo nume
+                    $num_registros = 5;
+                    $pagina = $_REQUEST['nume'];
+                    // chequeo si ya estaba pasando de pagina o si arranca de cero
+                    if (is_numeric($pagina)) {
+                        $inicio = ($pagina - 1) * $num_registros;
+                    } else {
+                        $inicio = 0;
+                    }
+                    $busqueda = mysqli_query($conexion, "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividades, a.nombre, c.cupos, c.comentarios FROM clases c, actividades a WHERE c.fk_actividades = a.id AND MONTH(c.fecha) = $mes AND YEAR(c.fecha) = $anio ORDER BY c.fecha DESC LIMIT $inicio, $num_registros;");
+                    $paginas = ceil($num_registros_query / $num_registros);
+                    // muestro los datos que me trajo la query
+                    while ($resultado = mysqli_fetch_array($busqueda)) {
+                        ?>
+                        <tr>
+                            <td scope="row"><?php echo $resultado['1'] ?></td>
+                            <td scope="row"><?php echo $resultado['2'] ?></td>
+                            <td scope="row"><?php echo $resultado['3'] ?></td>
+                            <td scope="row"><?php echo $resultado['5'] ?></td>
+                            <td scope="row"><?php echo $resultado['7'] ?></td>
+                            <td scope="row">
+                                <a class="btn btn-primary my-1" href="editarclase.php?
                             id=<?php echo $resultado['0'] ?>&
                             fecha=<?php echo $resultado['1'] ?>&
                             inicio=<?php echo $resultado['2'] ?>&
@@ -179,16 +210,39 @@ if (!$_SESSION['ingreso']) {
                             fk_actividad=<?php echo $resultado['4'] ?>&
                             cupos=<?php echo $resultado['6'] ?>&
                             comentarios=<?php echo $resultado['7'] ?>">
-                                Editar
-                            </a>
-                            <a class="btn btn-danger my-1"
-                                href="sp_eliminarclase.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
-                        </td>
-                    </tr>
+                                    Editar
+                                </a>
+                                <a class="btn btn-danger my-1"
+                                    href="sp_eliminarclase.php?id=<?php echo $resultado['0'] ?>">Eliminar</a>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                </table>
+            </div>
+            <!-- PAGINACION -->
+            <ul class="pagination pg-dark justify-content-center py-5 mb-0" style="float: none;">
+                <li class="page-item">
                     <?php
-                }
-                ?>
-            </table>
+                    if ($_REQUEST['nume'] == "1") {
+                        $_REQUEST['nume'] == "0";
+                    } elseif ($pagina > 1) {
+                        $anterior = $_REQUEST['nume'] - 1;
+                        // echo '<a class="page-link" aria-label="Anterior" href="crud_admin_clase.php?nume=1"><span aria-hidden="true">&laquo;</span><span class="sr_only">Anterior</span></a>';
+                        echo '<li class="page-item"><a class="page-link" href="crud_admin_clase.php?nume=' . ($pagina - 1) . '">' . $anterior . '</a></li>';
+                    }
+                    echo '<li class="page-item active"><a class="page-link">' . $_REQUEST['nume'] . '</a></li>';
+                    $siguiente = $_REQUEST['nume'] + 1;
+                    $ultima = $num_registros_query / $num_registros;
+                    if ($ultima == $_REQUEST['nume'] + 1)
+                        $ultima == "";
+                    if ($pagina < $paginas && $paginas > 1)
+                        echo '<li class="page-item"><a class="page-link" href="crud_admin_clase.php?nume=' . ($pagina + 1) . '">' . $siguiente . '</a></li>';
+                    // echo '<li class="page-item"><a class="page-link" aria-label="Siguiente" href="crud_admin_clase.php?nume=' . ceil($ultima) . '"><span aria-hidden="true">&raquo;</span><span class="sr_only">Siguiente</span></a></li>';
+                    ?>
+                </li>
+            </ul>
         </div>
         <div class="row">
             <a class="btn btn-primary" href="nuevaclase.php">Agregar clase</a>

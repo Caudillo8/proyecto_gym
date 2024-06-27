@@ -1,0 +1,11 @@
+- ADMIN
+    admin@admin.com
+    123
+
+- PROFESOR
+    prueba@prueba.com
+    123
+
+- CLIENTE
+    prueba@prueba.com
+    123

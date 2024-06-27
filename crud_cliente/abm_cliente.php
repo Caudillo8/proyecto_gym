@@ -28,13 +28,8 @@ $idIngresoCliente = $_SESSION['idIngresoCliente'];
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="../index.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-person-arms-up" viewBox="0 0 16 16">
-                        <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                        <path
-                            d="m5.93 6.704-.846 8.451a.768.768 0 0 0 1.523.203l.81-4.865a.59.59 0 0 1 1.165 0l.81 4.865a.768.768 0 0 0 1.523-.203l-.845-8.451A1.5 1.5 0 0 1 10.5 5.5L13 2.284a.796.796 0 0 0-1.239-.998L9.634 3.84a.7.7 0 0 1-.33.235c-.23.074-.665.176-1.304.176-.64 0-1.074-.102-1.305-.176a.7.7 0 0 1-.329-.235L4.239 1.286a.796.796 0 0 0-1.24.998l2.5 3.216c.317.316.475.758.43 1.204Z" />
-                    </svg>
-                    NombreSistema
+                    <img src="../images/logo.png" alt="Fit Fusion" style="width: 50px;">
+                    Fit Fusion
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -127,10 +122,19 @@ $idIngresoCliente = $_SESSION['idIngresoCliente'];
                 $query = mysqli_query($conexion, $select);
                 $rtdo = mysqli_fetch_array($query);
                 ?>
-                <p>Nombre completo: <?php echo $rtdo[1];?> <?php echo $rtdo[2]; ?></php>
-                <p>Teléfono: <?php echo $rtdo[3]; ?></p>
-                <p>DNI: <?php echo $rtdo[4]; ?></p>
-                <p>Sexo: <?php echo $rtdo[6]; ?></p>
+                <p>Nombre completo:
+                    <?php echo $rtdo[1]; ?>
+                    <?php echo $rtdo[2]; ?>
+                    </php>
+                <p>Teléfono:
+                    <?php echo $rtdo[3]; ?>
+                </p>
+                <p>DNI:
+                    <?php echo $rtdo[4]; ?>
+                </p>
+                <p>Sexo:
+                    <?php echo $rtdo[6]; ?>
+                </p>
                 <hr class="border border-black border-1 opacity-30 mx-auto" />
             </div>
         </div>
@@ -157,32 +161,47 @@ $idIngresoCliente = $_SESSION['idIngresoCliente'];
         </div>
         <div class="row">
             <div class="col my-2">
-                <table class="table table-responsive">
-                    <tr>
-                        <td scope="col">Fecha</td>
-                        <td scope="col">Horario inicio</td>
-                        <td scope="col">Horario final</td>
-                        <td scope="col">Actividad</td>
-                        <td scope="col">Comentario</td>
-                        <td scope="col">Opciones</td>
-                    </tr>
-                    <?php
-                    if (!isset($_POST['almanaque'])) {
-                        date_default_timezone_set('America/Argentina/Buenos_Aires');
-                        $fecha = date('Y-m-d');
-                    } else {
-                        $fecha = $_POST['almanaque'];
-                    }
-                    $select = "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividad, a.nombre, c.cupos, c.comentarios FROM clases c, actividades a WHERE c.fk_actividad = a.id AND c.fecha = '$fecha' ORDER BY fecha DESC;";
-                    $query = mysqli_query($conexion, $select);
-                    while ($resultado = mysqli_fetch_array($query)) {
-                        ?>
+                <div class="table-responsive">
+                    <table class="table">
                         <tr>
-                            <td scope="row"><?php echo $resultado['1'] ?></td>
-                            <td scope="row"><?php echo $resultado['2'] ?></td>
-                            <td scope="row"><?php echo $resultado['3'] ?></td>
-                            <td scope="row"><?php echo $resultado['5'] ?></td>
-                            <td scope="row"><?php echo $resultado['7'] ?></td>
+                            <td scope="col">Fecha</td>
+                            <td scope="col">Horario inicio</td>
+                            <td scope="col">Horario final</td>
+                            <td scope="col">Actividad</td>
+                            <td scope="col">Comentario</td>
+                            <td scope="col">Cupos</td>
+                            <td scope="col">Opciones</td>
+                        </tr>
+                        <?php
+                        if (!isset($_POST['almanaque'])) {
+                            date_default_timezone_set('America/Argentina/Buenos_Aires');
+                            $fecha = date('Y-m-d');
+                        } else {
+                            $fecha = $_POST['almanaque'];
+                        }
+                        $select = "SELECT c.id, c.fecha, c.inicio, c.fin, c.fk_actividades, a.nombre, c.cupos, c.comentarios FROM clases c, actividades a WHERE c.fk_actividades = a.id AND c.fecha = '$fecha' ORDER BY fecha DESC;";
+                        $query = mysqli_query($conexion, $select);
+                        while ($resultado = mysqli_fetch_array($query)) {
+                            ?>
+                        <tr>
+                            <td scope="row">
+                                <?php echo $resultado['1'] ?>
+                            </td>
+                            <td scope="row">
+                                <?php echo $resultado['2'] ?>
+                            </td>
+                            <td scope="row">
+                                <?php echo $resultado['3'] ?>
+                            </td>
+                            <td scope="row">
+                                <?php echo $resultado['5'] ?>
+                            </td>
+                            <td scope="row">
+                                <?php echo $resultado['7'] ?>
+                            </td>
+                            <td scope="row">
+                                <?php echo $resultado['6'] ?>
+                            </td>
                             <td scope="row">
                                 <a class="btn btn-primary m-1" onclick="anotarse(event)"
                                     href="abm_cliente_anotarse.php?idAnotacionAClase=<?php echo $resultado['0'] ?>&cantidadCupos=<?php echo $resultado['6'] ?>">
@@ -191,9 +210,10 @@ $idIngresoCliente = $_SESSION['idIngresoCliente'];
                             </td>
                         </tr>
                         <?php
-                    }
-                    ?>
-                </table>
+                        }
+                        ?>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="row my-3">

@@ -17,9 +17,11 @@ if (isset($_POST['ingresar'])) {
         session_start(); // vuelve a abrir para registrar la unica y nueva sesion
         $_SESSION['ingresoCliente'] = true;
         $_SESSION['idIngresoCliente'] = $fila['id'];
-        header('Location: crud_cliente/abm_cliente.php');
-    } else {
-        header('Location: index.html');
+        $_SESSION['usuario'] = $usuario; // Guarda el nombre de usuario en la sesión
+            echo '<script>alert("Bienvenido ' . $usuario . '!"); window.location.href = "crud_cliente/abm_cliente.php";</script>';
+    } 
+    else {
+    echo '<script>alert("Credenciales incorrectas."); window.location.href = "login_cliente.php";</script>';
     }
 }
 ?>
@@ -42,13 +44,8 @@ if (isset($_POST['ingresar'])) {
         <nav class="navbar navbar-expand-lg bg-black">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="index.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-person-arms-up" viewBox="0 0 16 16">
-                        <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                        <path
-                            d="m5.93 6.704-.846 8.451a.768.768 0 0 0 1.523.203l.81-4.865a.59.59 0 0 1 1.165 0l.81 4.865a.768.768 0 0 0 1.523-.203l-.845-8.451A1.5 1.5 0 0 1 10.5 5.5L13 2.284a.796.796 0 0 0-1.239-.998L9.634 3.84a.7.7 0 0 1-.33.235c-.23.074-.665.176-1.304.176-.64 0-1.074-.102-1.305-.176a.7.7 0 0 1-.329-.235L4.239 1.286a.796.796 0 0 0-1.24.998l2.5 3.216c.317.316.475.758.43 1.204Z" />
-                    </svg>
-                    NombreSistema
+                    <img src="images/logo.png" alt="Fit Fusion" style="width: 50px;">
+                    Fit Fusion
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -139,7 +136,7 @@ if (isset($_POST['ingresar'])) {
                     <div class="card border-white" style="background-color: #000;">
                         <div class="card-header text-white text-center">
                             <?php
-                            if(isset($_SESSION['ingresoCliente'])) {
+                            if (isset($_SESSION['ingresoCliente'])) {
                                 echo "YA ESTAS LOGUEADO";
                             } else {
                                 echo "Ingreso Cliente";
@@ -147,46 +144,71 @@ if (isset($_POST['ingresar'])) {
                             ?>
                         </div>
                         <div class="card-body text-white" style="background-color: #000;">
-                            <form action="" method="post">
+                            <form action="" method="post" onsubmit="return ValidarLogin()">
                                 <div class="my-3">
                                     <label class="form-label">Usuario (mail):</label>
-                                    <input <?php if(isset($_SESSION['ingresoCliente'])) echo "disabled" ?> class="form-control" type="text" name="usuario">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Contraseña:</label>
-                                    <input <?php if(isset($_SESSION['ingresoCliente'])) echo "disabled" ?> class="form-control" type="password" name="clave">
-                                </div>
-                                <div class="my-3 d-flex flex-column align-items-center justify-content-center">
-                                    <input <?php if(isset($_SESSION['ingresoCliente'])) echo 'style="visibility:hidden"' ?> class="btn btn-primary" type="submit" name="ingresar" value="Ingresar">
-                                    <a class="btn btn-outline-primary my-2" href="cerrar_sesion.php">Cerrar sesión</a>
-                                </div>
-                            </form>
+                                    <input <?php if (isset($_SESSION['ingresoCliente']))
+                                        echo "disabled" ?>
+                                            class="form-control" type="text" name="usuario" id="usuario">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Contraseña:</label>
+                                        <input <?php if (isset($_SESSION['ingresoCliente']))
+                                        echo "disabled" ?>
+                                            class="form-control" type="password" name="clave" id="clave">
+                                    </div>
+                                    <div class="my-3 d-flex flex-column align-items-center justify-content-center">
+                                        <input <?php if (isset($_SESSION['ingresoCliente']))
+                                        echo 'style="visibility:hidden"' ?> class="btn btn-primary" type="submit" name="ingresar" value="Ingresar">
+                                        <a class="btn btn-outline-primary my-2" href="cerrar_sesion.php" onclick="return confirmarCerrarSesion()">Cerrar sesión</a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <footer>
-        <div class="bg-black p-1">
-            <hr class="border border-white border-1 opacity-30 mx-auto w-50" />
-            <h5 class="text-center text-white my-3">© Aplicación web creada por Grupo 2, Tecnicatura Universitaria en
-                Programación, UTN FRH.</h5>
-            <h5 class="text-center text-white mb-1">Integrantes del grupo:</h5>
-            <h6 class="text-center text-white mb-1">Carossino Martín</h6>
-            <h6 class="text-center text-white mb-1">Hernandez Matías</h6>
-            <h6 class="text-center text-white mb-1">Sarnari Valentín</h6>
-            <h6 class="text-center text-white mb-1">Yedro Fernando</h6>
-        </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        <footer>
+            <div class="bg-black p-1">
+                <hr class="border border-white border-1 opacity-30 mx-auto w-50" />
+                <h5 class="text-center text-white my-3">© Aplicación web creada por Grupo 2, Tecnicatura Universitaria en
+                    Programación, UTN FRH.</h5>
+                <h5 class="text-center text-white mb-1">Integrantes del grupo:</h5>
+                <h6 class="text-center text-white mb-1">Carossino Martín</h6>
+                <h6 class="text-center text-white mb-1">Hernandez Matías</h6>
+                <h6 class="text-center text-white mb-1">Sarnari Valentín</h6>
+                <h6 class="text-center text-white mb-1">Yedro Fernando</h6>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <script>
+        function ValidarLogin() {
+            var usuario = document.getElementById("usuario").value;
+            var clave = document.getElementById("clave").value;
+
+            if (usuario === "" || clave === "") {
+                alert("Por favor, complete ambos campos.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+    <script>
+        function confirmarCerrarSesion() {
+            return confirm("¿Está seguro de que desea cerrar sesión?");
+        }
+    </script>
+
 </body>
+
 
 </html>
 
-<?php
-mysqli_close($conexion);
-?>
+    <?php mysqli_close($conexion);  ?>

@@ -16,7 +16,7 @@ $fk_actividad = $_POST['fk_actividad'];
 $cupos = $_POST['cupos'];
 $comentarios = $_POST['comentarios'];
 
-$update = "UPDATE clases SET id='$id', fecha='$fecha', inicio='$inicio', fin='$fin', fk_actividad='$fk_actividad', cupos='$cupos', comentarios='$comentarios' WHERE id = $id;";
+$update = "UPDATE clases SET id='$id', fecha='$fecha', inicio='$inicio', fin='$fin', fk_actividades='$fk_actividad', cupos='$cupos', comentarios='$comentarios' WHERE id = $id;";
 $query = mysqli_query($conexion, $update);
 
 if (!$query) {
