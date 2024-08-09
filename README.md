@@ -1,2 +1,2 @@
 # proyecto_gym
- gestión agenda gimnasio
+ Sistema de gestión de turnos en clases de un gimnasio. Desarrollo web con base de datos donde el cliente puede suscribirse al gym y desde una agenda ver los cupos de cada clase en cierta actividad. También existe el rol 'profesor' el cual puede consultar sus clases y los clientes que tiene adheridos a la misma, a su vez puede publicar un comentario en cada clase. Detrás todo el desarrollo del administrador en cuanto a altas, bajas y modificaciones. Se utilizó a modo de servidor local Xammpp y OracleSql DataModeler y para la maquetación Boobstrap.
